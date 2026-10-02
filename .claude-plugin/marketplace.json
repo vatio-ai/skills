@@ -1,0 +1,11 @@
+{
+  "name": "vatio",
+  "owner": { "name": "Vatio", "url": "https://vatio.ai" },
+  "plugins": [
+    {
+      "name": "vatio",
+      "source": "./",
+      "description": "Build a Vatio agent from your coding agent, then fix what supervisors flag and prove it with evals."
+    }
+  ]
+}
