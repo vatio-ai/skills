@@ -37,5 +37,7 @@ In short:
 
 `vatio docs` prints the whole contract (manifest, tools, knowledge, CLI) if
 the fix needs more than the digest says. If `vatio` is not installed, use
-`npx @vatio-ai/cli` in its place; if it says to log in, ask the developer to
-run `vatio login`.
+`npx @vatio-ai/cli` in its place; if it says to log in, run `vatio login`: it
+opens the browser on the developer's machine (if it doesn't, give them the
+link it prints), and they sign in and check the code matches. If it times
+out, run it again after they have signed in.
