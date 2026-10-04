@@ -5,8 +5,9 @@ description: Improve a Vatio agent from what its supervisors flagged. Use when a
 
 # Improve a Vatio agent from its flags
 
-Supervisors flag wrong replies in the Vatio inbox and write what the agent
-should have said. Vatio keeps the instructions for working them on the
+Supervisors flag wrong replies in the Vatio inbox and write what should have
+happened: a different answer, an action, or a tool the agent should have used
+or does not have. Vatio keeps the instructions for working them on the
 platform, so they are never out of date here. Start by reading them:
 
 ```bash
