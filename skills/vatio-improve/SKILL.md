@@ -32,6 +32,8 @@ In short:
 4. Open a pull request with what you changed and the eval result. Name flags
    by id (`F-7K2QX`), and report the open flags and the
    regression cases as two counts, never one total.
+5. If the digest, an error or the docs left you guessing, say so:
+   `vatio feedback "what you were doing and what was missing"`.
 
 `vatio docs` prints the whole contract (manifest, tools, knowledge, CLI) if
 the fix needs more than the digest says. If `vatio` is not installed, use

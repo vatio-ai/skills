@@ -25,10 +25,12 @@ In short:
    of their systems it should read from. Do not invent business facts.
 3. `vatio init SLUG` in the repository the agent belongs in, then write
    `vatio.yml` (and `tools/` for their APIs).
-4. `vatio tools check`, `vatio push`, then try it with `vatio chat` —
+4. `vatio diff`, `vatio push`, then try it with `vatio chat` —
    including a conversation that should hand off.
 5. Give them the link from `vatio env`, with what you tried. Publish with
    `vatio publish` only when they ask.
+6. If an error or the docs left you guessing, say so before you finish:
+   `vatio feedback "what you were doing and what was missing"`.
 
 `vatio` is `npx @vatio-ai/cli` when it is not installed globally. The first
 `vatio push` asks the developer to log in by email; tell them to check that
