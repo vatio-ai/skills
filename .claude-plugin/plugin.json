@@ -1,7 +1,7 @@
 {
   "name": "vatio",
   "description": "Build a Vatio agent from your coding agent, then fix what supervisors flag and prove it with evals.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": { "name": "Vatio", "url": "https://vatio.ai" },
   "homepage": "https://docs.vatio.ai",
   "repository": "https://github.com/vatio-ai/skills",

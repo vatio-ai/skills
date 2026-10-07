@@ -31,7 +31,10 @@ In short:
    passed on live now fails.
 4. Open a pull request with what you changed and the eval result. Name flags
    by id (`F-7K2QX`), and report the open flags and the
-   regression cases as two counts, never one total.
+   regression cases as two counts, never one total. With no GitHub
+   repository connected, `vatio propose --env <branch> --title "…"
+   --summary-file why.md` instead: the workspace's owner accepts it from the
+   inbox, which publishes it. Never `vatio publish` it yourself.
 5. If the digest, an error or the docs left you guessing, say so:
    `vatio feedback "what you were doing and what was missing"`.
 
