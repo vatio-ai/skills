@@ -13,7 +13,17 @@ the Vatio CLI; the instructions themselves come from the platform when it runs
 
 ## Install
 
-In Claude Code:
+Any coding agent, from the root of your project:
+
+```
+npx @vatio-ai/skills
+```
+
+It copies both skills into `.agents/skills/` (Codex, Cursor, Gemini CLI,
+GitHub Copilot, OpenCode and others) and `.claude/skills/` (Claude Code). Run
+it again to update them.
+
+Or in Claude Code, as a plugin:
 
 ```
 /plugin marketplace add vatio-ai/skills
@@ -21,13 +31,11 @@ In Claude Code:
 ```
 
 Your agent then uses them on its own when you ask it to build, improve or fix
-a Vatio agent, or you can call them as `/vatio:vatio-new` and
-`/vatio:vatio-improve`.
+a Vatio agent, or you can call them by name: `/vatio-new` and `/vatio-improve`,
+or `/vatio:vatio-new` and `/vatio:vatio-improve` from the plugin.
 
-Other coding agents: copy the `SKILL.md` files under `skills/` to wherever
-yours reads skills from. `vatio init` also writes a pointer to `vatio flags`
-into the workspace's `AGENTS.md`, which most coding agents read without
-installing anything.
+`vatio init` also writes a pointer to `vatio flags` into the workspace's
+`AGENTS.md`, which most coding agents read without installing anything.
 
 ## Docs
 
