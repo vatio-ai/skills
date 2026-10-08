@@ -25,7 +25,7 @@ In short:
    a knowledge entry, a tool, or the backend a tool calls.
 2. Work on a git branch. `vatio push` deploys it to the branch's own
    environment, never to live.
-3. Prove it with `vatio eval`: every flag is an eval case, replayed against
+3. Prove it with `vatio eval`: every flag made on live, or before the first publish, is an eval case, replayed against
    the branch and judged. The report counts the open flags apart from the
    regression cases. A fix is done when its flags pass and nothing that
    passed on live now fails.
