@@ -31,8 +31,8 @@ installing anything.
 
 ## Docs
 
-[Improve your agent from flags](https://docs.vatio.ai/improve) ·
-[CLI](https://docs.vatio.ai/cli/) · [Changelog](https://docs.vatio.ai/changelog)
+[Improve your agent from flags](https://vatio.ai/docs/improve) ·
+[CLI](https://vatio.ai/docs/cli/) · [Changelog](https://vatio.ai/docs/changelog)
 
 ## Issues
 
