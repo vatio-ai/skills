@@ -22,7 +22,11 @@ top. Follow those instructions; they take precedence over anything below.
 In short:
 
 1. Group the flags by cause, and fix each cause where it lives: `vatio.yml`,
-   a knowledge entry, a tool, or the backend a tool calls.
+   a knowledge entry, a tool, or the backend a tool calls. `vatio tools --env
+   live` shows each tool's error rate, timeouts and latency across every
+   conversation, and the calls that failed with what the backend answered: a
+   failing tool rarely gets flagged, because the agent apologizes and moves
+   on. Fix those too.
 2. Work on a git branch. `vatio push` deploys it to the branch's own
    environment, never to live.
 3. Prove it with `vatio eval`: every flag made on live, or before the first publish, is an eval case, replayed against
