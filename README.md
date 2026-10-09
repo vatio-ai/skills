@@ -23,6 +23,13 @@ It copies both skills into `.agents/skills/` (Codex, Cursor, Gemini CLI,
 GitHub Copilot, OpenCode and others) and `.claude/skills/` (Claude Code). Run
 it again to update them.
 
+Or with the open [skills](https://skills.sh) CLI, which asks which agents you
+use and installs for those:
+
+```
+npx skills add vatio-ai/skills
+```
+
 Or in Claude Code, as a plugin:
 
 ```
