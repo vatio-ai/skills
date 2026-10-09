@@ -4,14 +4,15 @@
 //   .agents/skills/   Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode, Cline, Amp
 //   .claude/skills/   Claude Code, which does not read .agents/
 // Running it again overwrites the copies with this version's.
-import { cpSync, existsSync, readdirSync } from "node:fs";
+import { cpSync, existsSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const usage = `usage: npx @vatio-ai/skills [--dir PATH]
 
-Copies the Vatio skills (vatio-new, vatio-improve) into PATH/.agents/skills and
-PATH/.claude/skills. PATH defaults to the current directory.`;
+Copies the Vatio skills (vatio-init, vatio-improve, vatio-share-session) into
+PATH/.agents/skills and PATH/.claude/skills. PATH defaults to the current
+directory.`;
 
 const args = process.argv.slice(2);
 let root = process.cwd();
@@ -34,6 +35,9 @@ if (!existsSync(root)) {
 }
 
 const source = join(dirname(fileURLToPath(import.meta.url)), "..", "skills");
+// Skills this package used to ship under another name. Left in place, the old
+// copy would answer the same requests as the new one.
+const RENAMED = { "vatio-new": "vatio-init" };
 const skills = readdirSync(source, { withFileTypes: true })
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name);
@@ -43,6 +47,20 @@ for (const target of [".agents/skills", ".claude/skills"]) {
     const dest = join(root, target, skill);
     cpSync(join(source, skill), dest, { recursive: true, force: true });
     console.log(`  ${relative(process.cwd(), join(dest, "SKILL.md")) || dest}`);
+  }
+  for (const [old, current] of Object.entries(RENAMED)) {
+    const dest = join(root, target, old);
+    if (!installedByUs(dest, old)) continue;
+    rmSync(dest, { recursive: true, force: true });
+    console.log(`  removed ${relative(process.cwd(), dest) || dest} (now ${current})`);
+  }
+}
+
+function installedByUs(dir, name) {
+  try {
+    return readFileSync(join(dir, "SKILL.md"), "utf8").includes(`\nname: ${name}\n`);
+  } catch {
+    return false;
   }
 }
 

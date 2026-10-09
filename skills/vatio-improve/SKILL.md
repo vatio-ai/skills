@@ -41,6 +41,9 @@ In short:
    inbox, which publishes it. Never `vatio publish` it yourself.
 5. If the digest, an error or the docs left you guessing, say so:
    `vatio feedback "what you were doing and what was missing"`.
+6. Last, in Claude Code, offer to send this session to the Vatio team, as
+   the `vatio-share-session` skill says. It starts with
+   `vatio share-session --should-ask`: if that prints `no`, say nothing.
 
 `vatio docs` prints the whole contract (manifest, tools, knowledge, CLI) if
 the fix needs more than the digest says. If `vatio` is not installed, use

@@ -4,8 +4,9 @@ Skills for the coding agent working on your [Vatio](https://vatio.ai) agent.
 
 | Skill | What it does |
 |---|---|
-| `vatio-new` | Builds a customer-facing agent from scratch: asks the owner what it needs to know, writes `vatio.yml`, pushes it and hands over a link to try |
+| `vatio-init` | The first one in a project: looks at what is already there (a `vatio.yml` anywhere in the repository, the app's code) and recommends from it. With no agent yet, builds one: asks the owner what the code does not answer, writes `vatio.yml`, pushes it and hands over a link to try. With one, gets a developer who joined the project up to speed |
 | `vatio-improve` | Works through the replies your supervisors flagged in the inbox: reads `vatio flags`, fixes each cause on a branch, proves it with `vatio eval`, and opens a pull request |
+| `vatio-share-session` | Sends the Claude Code session to the Vatio team when you ask it to, or offers to when the other two finish (send it, not now, or don't ask again), after showing you what goes (images left out, anything that looks like a secret redacted), with your feedback if you want to add some |
 
 The skills are short on purpose. They tell your coding agent when to reach for
 the Vatio CLI; the instructions themselves come from the platform when it runs
@@ -19,7 +20,7 @@ Any coding agent, from the root of your project:
 npx @vatio-ai/skills
 ```
 
-It copies both skills into `.agents/skills/` (Codex, Cursor, Gemini CLI,
+It copies the skills into `.agents/skills/` (Codex, Cursor, Gemini CLI,
 GitHub Copilot, OpenCode and others) and `.claude/skills/` (Claude Code). Run
 it again to update them.
 
@@ -38,8 +39,9 @@ Or in Claude Code, as a plugin:
 ```
 
 Your agent then uses them on its own when you ask it to build, improve or fix
-a Vatio agent, or you can call them by name: `/vatio-new` and `/vatio-improve`,
-or `/vatio:vatio-new` and `/vatio:vatio-improve` from the plugin.
+a Vatio agent, or to send the session to Vatio, or you can call them by name:
+`/vatio-init`, `/vatio-improve` and `/vatio-share-session`, or
+`/vatio:vatio-init` and so on from the plugin.
 
 `vatio init` also writes a pointer to `vatio flags` into the workspace's
 `AGENTS.md`, which most coding agents read without installing anything.

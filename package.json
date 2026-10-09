@@ -1,6 +1,6 @@
 {
   "name": "@vatio-ai/skills",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Agent skills for building and improving a Vatio agent from your coding agent: Claude Code, Codex, Cursor, Gemini CLI, Copilot and any agent that reads SKILL.md",
   "keywords": [
     "vatio",
