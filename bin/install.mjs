@@ -4,7 +4,7 @@
 //   .agents/skills/   Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode, Cline, Amp
 //   .claude/skills/   Claude Code, which does not read .agents/
 // Running it again overwrites the copies with this version's.
-import { cpSync, existsSync, readFileSync, readdirSync, rmSync } from "node:fs";
+import { cpSync, existsSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -35,6 +35,10 @@ if (!existsSync(root)) {
 }
 
 const source = join(dirname(fileURLToPath(import.meta.url)), "..", "skills");
+// Left next to each copy, so `vatio flags` can tell a project whose copies are
+// older than the published skills (cli/lib/skills-hint.mjs).
+const VERSION_FILE = ".vatio-skills-version";
+const { version } = JSON.parse(readFileSync(join(source, "..", "package.json"), "utf8"));
 // Skills this package used to ship under another name. Left in place, the old
 // copy would answer the same requests as the new one.
 const RENAMED = { "vatio-new": "vatio-init" };
@@ -46,6 +50,7 @@ for (const target of [".agents/skills", ".claude/skills"]) {
   for (const skill of skills) {
     const dest = join(root, target, skill);
     cpSync(join(source, skill), dest, { recursive: true, force: true });
+    writeFileSync(join(dest, VERSION_FILE), `${version}\n`);
     console.log(`  ${relative(process.cwd(), join(dest, "SKILL.md")) || dest}`);
   }
   for (const [old, current] of Object.entries(RENAMED)) {

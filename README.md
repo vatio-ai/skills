@@ -38,6 +38,10 @@ Or in Claude Code, as a plugin:
 /plugin install vatio@vatio
 ```
 
+Claude Code does not update plugins from other people's marketplaces on its own:
+turn it on once in `/plugin` → **Marketplaces** → **vatio** → **Enable
+auto-update**, or run `claude plugin update vatio@vatio`.
+
 Your agent then uses them on its own when you ask it to build, improve or fix
 a Vatio agent, or to send the session to Vatio, or you can call them by name:
 `/vatio-init`, `/vatio-improve` and `/vatio-share-session`, or

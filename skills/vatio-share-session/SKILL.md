@@ -1,5 +1,6 @@
 ---
 name: vatio-share-session
+allowed-tools: AskUserQuestion
 description: Send this coding session to the Vatio team, so they can see where building or improving a Vatio agent got stuck. Use when the user asks to share, send or report this session (or "the conversation", "what we did") to Vatio, when the Vatio team asked them for it, when Vatio itself got in the way and they want the team to see exactly how, or when vatio-init or vatio-improve finish and say to offer it.
 ---
 
@@ -35,20 +36,27 @@ It is sent in one of two ways: the user asked for it, or you offer it because
 3. Ask whether to send it, once. It is their conversation: never send it on
    your own, even when the task seems to call for it.
 
-   When you are offering it, ask with three answers (in Claude Code, as a
-   multiple-choice question), for example: "Do you want to send this session
+   When you are offering it, ask with the **AskUserQuestion** tool, Claude
+   Code's own question, not in a message. One question, in the user's
+   language, header `Vatio`, for example: "Do you want to send this session
    to the Vatio team, so they can see where Vatio got in the way and improve
-   it?"
+   it?", with these options:
 
-   - **Send it**
-   - **Not now**: do nothing more. It will not be offered again for a week.
-   - **Don't ask again**: run
-     `npx @vatio-ai/cli@latest share-session --never`.
+   - **Send it** — "The whole conversation, as shown above."
+   - **Send it with a comment** — "You say what got in the way, what you
+     expected, or anything else for the team."
+   - **Not now** — "It won't be offered again for a week."
+   - **Don't ask again** — "It won't be offered again."
 
-   In the same question, suggest they add feedback: what got in the way, what
-   they expected Vatio to do, or anything else they want the team to know.
-   It is optional — the session is what matters, and it goes fine on its own.
-   A no is a fine answer: do not insist.
+   **Send it with a comment**: ask for the comment in one plain message, then
+   send. A comment they type in the question's own text field instead (its
+   "Other" answer, or a note on an option) is their feedback too, unless it
+   says no. **Not now**: do nothing more. **Don't ask again**: run
+   `npx @vatio-ai/cli@latest share-session --never`. A no is a fine answer:
+   do not insist.
+
+   When the user asked for it themselves, just confirm in a message and
+   take any feedback they give.
 
 4. If they say to send it, send it. With their feedback, in their words, as
    they gave it:
