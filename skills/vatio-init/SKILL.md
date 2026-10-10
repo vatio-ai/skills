@@ -56,7 +56,7 @@ you recommend, and ask them to confirm.
   `vatio.yml` (what it is for, its tools, its knowledge, when it hands off)
   and recommend from what you see:
   - the folder differs from live: say so first, the repository may be behind;
-  - open flags in `vatio flags`: work them with the `vatio-improve` skill;
+  - open reports in `vatio flags`: work them with the `vatio-improve` skill;
   - tool calls failing in `vatio tools`: the fix is in the backend they call;
   - `workspace_forbidden`: they are not in the workspace yet, and the owner
     invites them from **Team** in the console.
