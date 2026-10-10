@@ -9,8 +9,10 @@ description: Send this coding session to the Vatio team, so they can see where b
 `vatio share-session` sends the Claude Code session you are running in: what
 the user asked, what you read and ran, and what came back. It leaves out
 images, replaces anything that looks like a key, token or password with
-`[REDACTED]`, and the home directory with `~`. Only the Vatio team reads it,
-to see where Vatio got in the way and fix it.
+`[REDACTED]`, email addresses and international phone numbers with `[EMAIL]`
+and `[PHONE]`, and the home directory with `~`. Only the Vatio team reads it,
+to see where Vatio got in the way and fix it; every read is logged, and it is
+deleted 30 days after it arrives (sooner on request to dpo@vatio.ai).
 
 It is sent in one of two ways: the user asked for it, or you offer it because
 `vatio-init` or `vatio-improve` just finished.
@@ -31,7 +33,9 @@ It is sent in one of two ways: the user asked for it, or you offer it because
    ```
 
    Tell them which session it is (the summary it prints), that it is the
-   whole conversation, and that the file is there if they want to read it.
+   whole conversation, what was hidden, how it is treated (only the Vatio
+   team reads it, every read is logged, deleted after 30 days), and that the
+   file is there if they want to read it.
 
 3. Ask whether to send it, once. It is their conversation: never send it on
    your own, even when the task seems to call for it.
@@ -42,7 +46,8 @@ It is sent in one of two ways: the user asked for it, or you offer it because
    to the Vatio team, so they can see where Vatio got in the way and improve
    it?", with these options:
 
-   - **Send it** — "The whole conversation, as shown above."
+   - **Send it** — "The whole conversation, as shown above. Only the Vatio
+     team reads it, and it is deleted after 30 days."
    - **Send it with a comment** — "You say what got in the way, what you
      expected, or anything else for the team."
    - **Not now** — "It won't be offered again for a week."
@@ -77,6 +82,20 @@ It is sent in one of two ways: the user asked for it, or you offer it because
    The first time it may ask to sign in: it opens the browser (if it doesn't,
    give them the link it prints). Tell them it was sent and the number it
    printed.
+
+5. If a permission check refuses the command (Claude Code's auto mode can
+   treat it as sending data out), do not retry it or look for another way to
+   send it. Give the user the command to run in their own terminal, with the
+   session id from the summary, and their feedback in quotes at the end if
+   they gave some:
+
+   ```bash
+   npx @vatio-ai/cli@latest share-session --id SESSION_ID --yes
+   ```
+
+   When they say they ran it, check instead of asking:
+   `npx @vatio-ai/cli@latest share-session --list` marks a session that was
+   sent with `(sent #N, when)`. If it is not marked, it did not go.
 
 Only Claude Code sessions can be sent. In any other coding agent, do not offer
 it; when the user asks, write what happened instead:
