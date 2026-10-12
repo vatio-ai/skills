@@ -22,26 +22,34 @@ top. Follow those instructions; they take precedence over anything below.
 
 In short:
 
-1. Group the reports by cause, and fix each cause where it lives:
+1. Read each report's **Diagnosis** first: it says whose it is to fix, from
+   what that turn did. **Your backend**: a tool call to it failed. **Your
+   agent**: everything answered and the reply was still wrong, so the fix is
+   in `vatio.yml`, knowledge or a tool's definition. **Vatio**: the model
+   provider or Vatio failed and Vatio wrote the reply itself. Do not change
+   the agent for those: tell the developer, who can remove the report, and
+   if they keep happening, `vatio feedback`.
+2. Group the reports by cause, and fix each cause where it lives:
    `vatio.yml`, a knowledge entry, a tool, or the developer's backend a tool
    calls. `vatio tools --env live` shows each tool's error rate, timeouts and
    latency, and the calls that failed with what the backend answered: a
    failing tool rarely gets reported, because the agent apologizes and moves
    on. Fix those too.
-2. `vatio push`. It updates preview and runs no tests. No branch or
+3. `vatio push`. It updates preview and runs no tests. No branch or
    environment to set up: preview is the one.
-3. `vatio eval` tests every report against preview. It can take several
+4. `vatio eval` tests every report against preview. It can take several
    minutes, so in Claude Code start it with the Bash tool's
    `run_in_background` and read its report when it finishes. Iterate (fix,
    push, eval) until the reports pass and nothing that passes on live fails.
-   Name reports by id (`F-7K2QX`).
-4. Show the developer what passes now, and `vatio publish` once they agree:
+   A case marked "not tested (Vatio's side)" says nothing about your fix:
+   run `vatio eval` again. Name reports by id (`F-7K2QX`).
+5. Show the developer what passes now, and `vatio publish` once they agree:
    it changes what visitors get. If it is refused, follow its message: it
    says what to run. Never pass `--force` unless the developer explicitly
    asks for it.
-5. If the digest, an error or the docs left you guessing, say so:
+6. If the digest, an error or the docs left you guessing, say so:
    `vatio feedback "what you were doing and what was missing"`.
-6. Last, in Claude Code, offer to send this session to the Vatio team, as
+7. Last, in Claude Code, offer to send this session to the Vatio team, as
    the `vatio-share-session` skill says. It starts with
    `vatio share-session --should-ask`: if that prints `no`, say nothing.
 
