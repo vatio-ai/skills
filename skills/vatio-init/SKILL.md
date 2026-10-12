@@ -1,6 +1,6 @@
 ---
 name: vatio-init
-description: The first Vatio skill in a project. Looks at what is already there — a vatio.yml anywhere in the repository, the workspace on the platform, the app's own code — and recommends from it, then either builds a customer-facing AI agent (for WhatsApp, Instagram, a website widget or an app) and gets it to the console's Test screen, or gets a developer who joined a project that already has one up to speed. Use when asked to create, set up, start or ship a Vatio agent, a chatbot or a support/sales assistant on Vatio, to get started on or onboard onto a project that uses Vatio, or when the user pastes the prompt from vatio.ai.
+description: The first Vatio skill in a project. Looks at what is already there — a vatio.yml anywhere in the repository, the workspace on the platform, the app's own code — and recommends from it, then either builds a customer-facing AI agent (for WhatsApp, Instagram, a website widget or an app) and gets it to the Test page in the Vatio inbox, or gets a developer who joined a project that already has one up to speed. Use when asked to create, set up, start or ship a Vatio agent, a chatbot or a support/sales assistant on Vatio, to get started on or onboard onto a project that uses Vatio, or when the user pastes the prompt from vatio.ai.
 ---
 
 # Start with Vatio in this project
@@ -45,8 +45,8 @@ you recommend, and ask them to confirm.
      `vatio.yml` (and `tools/` for their APIs).
   3. `vatio diff`, `vatio push`, then try it with `vatio chat`, including a
      conversation that should hand off.
-  4. Give them the link `vatio push` prints after `Try it:` (the console's
-     Test screen, with web chat, WhatsApp and Instagram) with what you
+  4. Give them the link `vatio push` prints after `Try it:` (the inbox's
+     Test page, with web chat, WhatsApp and Instagram) with what you
      tried. Publish with `vatio publish` only when they ask.
 - **A `vatio.yml`: the agent exists.** Never `vatio init` here: it writes a
   starter agent, and pushing that replaces the real one. Work from the
@@ -59,7 +59,7 @@ you recommend, and ask them to confirm.
   - open reports in `vatio flags`: work them with the `vatio-improve` skill;
   - tool calls failing in `vatio tools`: the fix is in the backend they call;
   - `workspace_forbidden`: they are not in the workspace yet, and the owner
-    invites them from **Team** in the console.
+    invites them from **Team** in the inbox.
 - **A workspace slug but no `vatio.yml`.** Ask for the repository it lives
   in: Vatio keeps what was deployed, not the files it came from. Do not
   `vatio init` one instead.
