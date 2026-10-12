@@ -1,6 +1,6 @@
 {
   "name": "@vatio-ai/skills",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "The Vatio plugin for Claude Code: build a conversational agent for your app with one prompt, then improve it daily with vatio-improve.",
   "keywords": [
     "vatio",

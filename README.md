@@ -13,7 +13,7 @@ your app’s project in Claude Code.
 | Skill | What it does |
 |---|---|
 | `vatio-init` | The first one in a project: looks at what is already there (a `vatio.yml` anywhere in the repository, the app's code) and recommends from it. With no agent yet, builds one: asks the owner what the code does not answer, writes `vatio.yml`, pushes it and hands over a link to try. With one, gets a developer who joined the project up to speed |
-| `vatio-improve` | Takes every reply your supervisors reported in the inbox in one session: reads `vatio flags`, fixes each cause, `vatio push`, proves it with `vatio eval` (in the background in Claude Code) and publishes with `vatio publish` after your approval |
+| `vatio-improve` | Takes every reply your supervisors reported in the inbox in one session: reads `vatio flags`, fixes each cause, `vatio push`, proves it with `vatio test` (on Vatio's servers, in the background) and publishes with `vatio publish` after your approval |
 | `vatio-share-session` | Sends the Claude Code session to the Vatio team when you ask it to, or offers to when the other two finish (send it, not now, or don't ask again), after showing you what goes (images left out, anything that looks like a secret redacted), with your feedback if you want to add some |
 
 The skills are short on purpose. They tell your coding agent when to reach for
