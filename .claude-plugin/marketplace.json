@@ -12,7 +12,7 @@
       "name": "vatio",
       "source": "./",
       "description": "Vatio skills for Claude Code, Cursor and Codex: add an AI agent to the app you're building with /vatio-init, put it in your web, iOS or Android app with /vatio-add-to-app, then improve it daily with /vatio-improve.",
-      "version": "1.15.0",
+      "version": "1.16.0",
       "homepage": "https://vatio.ai/docs/integrations/claude-code",
       "category": "development",
       "keywords": [
