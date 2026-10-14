@@ -1,11 +1,34 @@
 {
   "name": "vatio",
-  "owner": { "name": "Vatio", "url": "https://vatio.ai" },
+  "owner": {
+    "name": "Vatio",
+    "url": "https://vatio.ai"
+  },
+  "metadata": {
+    "description": "The Vatio plugin: add an AI agent to the app you're building and improve it from real conversations."
+  },
   "plugins": [
     {
       "name": "vatio",
       "source": "./",
-      "description": "Vatio skills for Claude Code, Cursor and Codex: add an AI agent to the app you're building with /vatio-init, then improve it daily with /vatio-improve."
+      "description": "Vatio skills for Claude Code, Cursor and Codex: add an AI agent to the app you're building with /vatio-init, then improve it daily with /vatio-improve.",
+      "version": "1.14.2",
+      "homepage": "https://vatio.ai/docs/integrations/claude-code",
+      "category": "development",
+      "keywords": [
+        "vatio",
+        "ai-agent",
+        "customer-support",
+        "chatbot",
+        "conversational-agent",
+        "support-agent",
+        "claude-code",
+        "cursor",
+        "codex",
+        "whatsapp",
+        "supabase",
+        "agent-skills"
+      ]
     }
   ]
 }

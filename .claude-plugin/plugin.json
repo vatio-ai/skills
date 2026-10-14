@@ -1,9 +1,26 @@
 {
   "name": "vatio",
   "description": "Vatio skills for Claude Code, Cursor and Codex: add an AI agent to the app you're building with /vatio-init, then improve it daily with /vatio-improve.",
-  "version": "1.14.1",
-  "author": { "name": "Vatio", "url": "https://vatio.ai" },
-  "homepage": "https://vatio.ai/docs",
+  "version": "1.14.2",
+  "author": {
+    "name": "Vatio",
+    "url": "https://vatio.ai"
+  },
+  "homepage": "https://vatio.ai/docs/integrations/claude-code",
   "repository": "https://github.com/vatio-ai/skills",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "vatio",
+    "ai-agent",
+    "customer-support",
+    "chatbot",
+    "conversational-agent",
+    "support-agent",
+    "claude-code",
+    "cursor",
+    "codex",
+    "whatsapp",
+    "supabase",
+    "agent-skills"
+  ]
 }
