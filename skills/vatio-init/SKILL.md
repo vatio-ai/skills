@@ -42,7 +42,8 @@ you recommend, and ask them to confirm.
      which of their systems it should read from. Do not invent business
      facts.
   2. `vatio init SLUG` in the repository the agent belongs in, then write
-     `vatio.yml` (and `tools/` for their APIs).
+     `vatio.yml` (and `tools/` for their APIs, with one that alerts their
+     team when a person should take over: **Human in the loop** in the docs).
   3. `vatio diff`, `vatio push`, then try it with `vatio chat`, including a
      conversation that should hand off.
   4. Give them what `vatio push` printed, with what you tried. With no
