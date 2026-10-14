@@ -20,8 +20,9 @@ need your app’s project on your computer and Node.js 20 or newer.
 | Skill | What it does |
 |---|---|
 | `vatio-init` | The first one in a project: looks at what is already there (a `vatio.yml` anywhere in the repository, the app's code) and recommends from it. With no agent yet, builds one: asks the owner what the code does not answer, writes `vatio.yml`, pushes it and hands over a link to try. With one, gets a developer who joined the project up to speed |
+| `vatio-add-to-app` | Puts the agent in your app once you have tried it: the web widget, or the iOS or Android SDK with a chat screen in your app's style, a publishable token for development and one for release, and your signed-in users passed along |
 | `vatio-improve` | Takes every reply your supervisors reported in the inbox in one session: reads `vatio flags`, fixes each cause, `vatio push`, proves it with `vatio test` (on Vatio's servers, in the background) and publishes with `vatio publish` after your approval |
-| `vatio-share-session` | Sends the coding session to the Vatio team when you ask it to, or offers to when the other two finish (send it, not now, or don't ask again), after showing you what goes (images left out, anything that looks like a secret redacted), with your feedback if you want to add some |
+| `vatio-share-session` | Sends the coding session to the Vatio team when you ask it to, or offers to when the others finish (send it, not now, or don't ask again), after showing you what goes (images left out, anything that looks like a secret redacted), with your feedback if you want to add some |
 
 The skills are short on purpose. They tell your coding agent when to reach for
 the Vatio CLI; the instructions themselves come from the platform when it runs
@@ -50,7 +51,7 @@ auto-update**, or run `claude plugin update vatio@vatio`.
 
 Your coding agent then uses them on its own when you ask it to build, improve
 or fix a Vatio agent, or to send the session to Vatio, or you can call them by
-name: `/vatio-init`, `/vatio-improve` and `/vatio-share-session`, or
+name: `/vatio-init`, `/vatio-add-to-app`, `/vatio-improve` and `/vatio-share-session`, or
 `/vatio:vatio-init` and so on from the plugin.
 
 `vatio init` also writes a pointer to `vatio flags` into the workspace's

@@ -1,7 +1,7 @@
 {
   "name": "vatio",
-  "description": "Vatio skills for Claude Code, Cursor and Codex: add an AI agent to the app you're building with /vatio-init, then improve it daily with /vatio-improve.",
-  "version": "1.14.2",
+  "description": "Vatio skills for Claude Code, Cursor and Codex: add an AI agent to the app you're building with /vatio-init, put it in your web, iOS or Android app with /vatio-add-to-app, then improve it daily with /vatio-improve.",
+  "version": "1.15.0",
   "author": {
     "name": "Vatio",
     "url": "https://vatio.ai"
@@ -21,6 +21,9 @@
     "codex",
     "whatsapp",
     "supabase",
+    "ios",
+    "android",
+    "chat-widget",
     "agent-skills"
   ]
 }

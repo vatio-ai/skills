@@ -48,6 +48,8 @@ you recommend, and ask them to confirm.
   4. Give them the link `vatio push` prints after `Try it:` (the inbox's
      Test page, with web chat, WhatsApp and Instagram) with what you
      tried. Publish with `vatio publish` only when they ask.
+  5. Once they have tried it, offer to put it in the app (the web widget,
+     or the iOS or Android SDK) with the `vatio-add-to-app` skill.
 - **A `vatio.yml`: the agent exists.** Never `vatio init` here: it writes a
   starter agent, and pushing that replaces the real one. Work from the
   directory of the `vatio.yml` and follow **Joining an existing workspace**:

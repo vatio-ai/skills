@@ -10,9 +10,9 @@ import { fileURLToPath } from "node:url";
 
 const usage = `usage: npx @vatio-ai/skills [--dir PATH]
 
-Copies the Vatio skills (vatio-init, vatio-improve, vatio-share-session) into
-PATH/.agents/skills and PATH/.claude/skills. PATH defaults to the current
-directory.`;
+Copies the Vatio skills (vatio-init, vatio-add-to-app, vatio-improve,
+vatio-share-session) into PATH/.agents/skills and PATH/.claude/skills. PATH
+defaults to the current directory.`;
 
 const args = process.argv.slice(2);
 let root = process.cwd();
