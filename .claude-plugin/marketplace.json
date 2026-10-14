@@ -5,7 +5,7 @@
     {
       "name": "vatio",
       "source": "./",
-      "description": "The Vatio plugin for Claude Code: build a conversational agent for your app with one prompt, then improve it daily with vatio-improve."
+      "description": "Vatio skills for Claude Code, Cursor and Codex: add an AI agent to the app you're building with /vatio-init, then improve it daily with /vatio-improve."
     }
   ]
 }

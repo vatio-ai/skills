@@ -1,46 +1,56 @@
-# Vatio: the Claude Code plugin for your app’s agent
+# Vatio: an AI agent for the app you’re building
 
-Already have an app and users? Describe the conversational agent you want in
-Claude Code. `vatio-init` builds it from your project; [Vatio](https://vatio.ai)
+Building an app with Claude Code, Cursor or Codex? Give it an agent that knows
+the app and its users. In your app’s project:
+
+```bash
+npx @vatio-ai/skills
+```
+
+Then, in Claude Code, run `/vatio-init` (in Cursor or Codex, ask it to use
+vatio-init). It builds the agent from your project; [Vatio](https://vatio.ai)
 runs it with an inbox, human handoff and evaluation checks. You try the preview
 and approve publication.
 
-After launch, report mistakes in the inbox and make `/vatio:vatio-improve` your
-daily routine. Claude prepares fixes, Vatio tests the reported cases, and you
-approve the update. You do not need to write code yourself; you need access to
-your app’s project in Claude Code.
+After launch, report mistakes in the inbox and make `/vatio-improve` your
+daily routine. Your coding agent prepares fixes, Vatio tests the reported
+cases, and you approve the update. You do not need to write code yourself; you
+need your app’s project on your computer and Node.js 20 or newer.
 
 | Skill | What it does |
 |---|---|
 | `vatio-init` | The first one in a project: looks at what is already there (a `vatio.yml` anywhere in the repository, the app's code) and recommends from it. With no agent yet, builds one: asks the owner what the code does not answer, writes `vatio.yml`, pushes it and hands over a link to try. With one, gets a developer who joined the project up to speed |
 | `vatio-improve` | Takes every reply your supervisors reported in the inbox in one session: reads `vatio flags`, fixes each cause, `vatio push`, proves it with `vatio test` (on Vatio's servers, in the background) and publishes with `vatio publish` after your approval |
-| `vatio-share-session` | Sends the Claude Code session to the Vatio team when you ask it to, or offers to when the other two finish (send it, not now, or don't ask again), after showing you what goes (images left out, anything that looks like a secret redacted), with your feedback if you want to add some |
+| `vatio-share-session` | Sends the coding session to the Vatio team when you ask it to, or offers to when the other two finish (send it, not now, or don't ask again), after showing you what goes (images left out, anything that looks like a secret redacted), with your feedback if you want to add some |
 
 The skills are short on purpose. They tell your coding agent when to reach for
 the Vatio CLI; the instructions themselves come from the platform when it runs
 `vatio docs` or `vatio flags`, so they are never out of date.
 
-## Install in Claude Code
+## Install
 
-In your app’s project, run these commands one at a time and follow the
-installation panel:
+`npx @vatio-ai/skills` copies the skills into `.claude/skills/`, where Claude
+Code reads them, and `.agents/skills/`, where Codex, Cursor, Gemini CLI,
+GitHub Copilot and most other coding agents do. Run it again to update them.
+
+### As a Claude Code plugin
+
+In Claude Code the same skills come as a plugin that can update itself. Run
+these one at a time and follow the installation panel; the commands are then
+`/vatio:vatio-init` and `/vatio:vatio-improve`:
 
 ```text
 /plugin marketplace add vatio-ai/skills
 /plugin install vatio@vatio
 ```
 
-Then ask: “Use vatio-init to build a support agent for this app. Connect it to
-our existing users and features, define its permissions and human handoff,
-and give me a preview to try before publishing.”
-
 Claude Code does not update plugins from other people's marketplaces on its own:
 turn it on once in `/plugin` → **Marketplaces** → **vatio** → **Enable
 auto-update**, or run `claude plugin update vatio@vatio`.
 
-Your agent then uses them on its own when you ask it to build, improve or fix
-a Vatio agent, or to send the session to Vatio, or you can call them by name:
-`/vatio-init`, `/vatio-improve` and `/vatio-share-session`, or
+Your coding agent then uses them on its own when you ask it to build, improve
+or fix a Vatio agent, or to send the session to Vatio, or you can call them by
+name: `/vatio-init`, `/vatio-improve` and `/vatio-share-session`, or
 `/vatio:vatio-init` and so on from the plugin.
 
 `vatio init` also writes a pointer to `vatio flags` into the workspace's
