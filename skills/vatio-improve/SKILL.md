@@ -29,6 +29,10 @@ In short:
    provider or Vatio failed and Vatio wrote the reply itself. Do not change
    the agent for those: tell the developer, who can remove the report, and
    if they keep happening, `vatio feedback`.
+   `vatio flags rm ID` removes a report and its test for everyone. It is the
+   developer's call: propose it (a report Vatio caused, one that asks for
+   something the agent must not do, one whose fix is in but the tests cannot
+   reproduce) and run it only when they say so.
 2. Group the reports by cause, and fix each cause where it lives:
    `vatio.yml`, a knowledge entry, a tool, or the developer's backend a tool
    calls. `vatio tools --env live` shows each tool's error rate, timeouts and
@@ -45,8 +49,7 @@ In short:
    comes with the `vatio chat show CHAT_ID` of its replay. Iterate (fix, push,
    test) until the reports pass and nothing that passes on live fails. A case
    marked "not tested (Vatio's side)" says nothing about your fix: run
-   `vatio test --wait` again. Name reports by id (`F-7K2QX`). A CLI before
-   0.81.0 calls it `vatio eval`.
+   `vatio test --wait` again. Name reports by id (`F-7K2QX`).
 5. Show the developer what passes now, and `vatio publish` once they agree:
    it changes what visitors get. If it is refused, follow its message: it
    says what to run. Never pass `--force` unless the developer explicitly
