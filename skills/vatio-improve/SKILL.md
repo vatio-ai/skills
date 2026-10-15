@@ -66,3 +66,13 @@ the fix needs more than the digest says. If `vatio` is not installed, use
 opens the browser on the developer's machine (if it doesn't, give them the
 link it prints), and they sign in and check the code matches. If it times
 out, run it again after they have signed in.
+
+A command you hand the developer to run themselves, because a permission
+check refused it or it needs their own credentials, says
+`npx @vatio-ai/cli@latest`, never `vatio`: the `vatio` installed on their
+machine can be too old for Vatio to accept. When one command's output feeds
+another (a token into a secrets store), take it with `--json` and chain with
+`&&`, never through `grep`, so a failure stops there instead of passing on an
+empty value. If Claude Code's auto mode refused a `vatio` command and the
+project's `.claude/settings.json` has no `Bash(vatio *)` rule, also mention
+**Auto mode** on the docs' Claude Code page.

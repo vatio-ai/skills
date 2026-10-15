@@ -73,6 +73,21 @@ you recommend, and ask them to confirm.
   in: Vatio keeps what was deployed, not the files it came from. Do not
   `vatio init` one instead.
 
+## Claude Code permissions
+
+In Claude Code, once the agent is pushed, check the project's
+`.claude/settings.json` (in the folder Claude Code was opened in). If it has
+no `Bash(vatio *)` rule, offer once to add the block in **Auto mode** on the
+docs' Claude Code page: it lets you run `vatio` without the auto mode
+classifier refusing it, and still asks the developer before `vatio publish`,
+`vatio rollback`, `vatio secrets` and `vatio keys`. Add it only with their
+yes, merged into what the file has, never replacing it, and add no other rule.
+It matches `vatio`, so it needs the CLI installed:
+`npm install -g @vatio-ai/cli`, also only with their yes. Run each `vatio`
+command on its own, not in a pipe or after `cd … &&`, so the rule matches.
+Never edit `~/.claude/settings.json`; for `vatio share-session` point them to
+that same section.
+
 ## 3. Before you finish
 
 1. If an error or the docs left you guessing, say so:
@@ -89,3 +104,13 @@ prints). Tell them to sign in with the account that kept it and check that
 the code on the page matches the one the terminal printed. If the command
 times out waiting, run it again after they have signed in: it picks up the
 same sign-in page.
+
+A command you hand the developer to run themselves, because a permission
+check refused it or it needs their own credentials, says
+`npx @vatio-ai/cli@latest`, never `vatio`: the `vatio` installed on their
+machine can be too old for Vatio to accept. When one command's output feeds
+another (a token into a secrets store), take it with `--json` and chain with
+`&&`, never through `grep`, so a failure stops there instead of passing on an
+empty value. If Claude Code's auto mode refused a `vatio` command and the
+project's `.claude/settings.json` has no `Bash(vatio *)` rule, also mention
+**Auto mode** on the docs' Claude Code page.

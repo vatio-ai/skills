@@ -30,7 +30,8 @@ SDK, Android SDK, Flutter SDK, Authentication, Supabase) have the details.
    screens or layout, which tokens, how signed-in users are passed, and ask
    them to confirm.
 3. **Tokens.** `vatio tokens create --env preview` for development builds and
-   `--env live` for release builds, each with its origins. `vatpub_` tokens
+   `--env live` for release builds, each with its origins (`--json` when the
+   token goes straight into a config or secrets store). `vatpub_` tokens
    ship in the app's configuration; a `vat_` token never does.
 4. **Add it.** Web: the widget, once for the whole app. iOS, Android and Flutter: the
    SDK has no UI, so write the chat screen in the app's own style from the
@@ -56,3 +57,13 @@ Code, offer to send this session to the Vatio team, as the
 `no`, say nothing.
 
 `vatio` is `npx @vatio-ai/cli` when it is not installed globally.
+
+A command you hand the developer to run themselves, because a permission
+check refused it or it needs their own credentials, says
+`npx @vatio-ai/cli@latest`, never `vatio`: the `vatio` installed on their
+machine can be too old for Vatio to accept. When one command's output feeds
+another (a token into a secrets store), take it with `--json` and chain with
+`&&`, never through `grep`, so a failure stops there instead of passing on an
+empty value. If Claude Code's auto mode refused a `vatio` command and the
+project's `.claude/settings.json` has no `Bash(vatio *)` rule, also mention
+**Auto mode** on the docs' Claude Code page.

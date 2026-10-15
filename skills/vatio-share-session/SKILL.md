@@ -95,7 +95,10 @@ It is sent in one of two ways: the user asked for it, or you offer it because
 
    When they say they ran it, check instead of asking:
    `npx @vatio-ai/cli@latest share-session --list` marks a session that was
-   sent with `(sent #N, when)`. If it is not marked, it did not go.
+   sent with `(sent #N, when)`. If it is not marked, it did not go. To have
+   auto mode let it through next time, point them to **Auto mode** on the
+   docs' Claude Code page: it is a line in their own Claude Code settings,
+   which you do not edit.
 
 Only Claude Code sessions can be sent. In any other coding agent, do not offer
 it; when the user asks, write what happened instead:
