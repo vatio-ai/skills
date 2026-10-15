@@ -40,6 +40,11 @@ SDK, Android SDK, Flutter SDK, Authentication, Supabase) have the details.
    [vatio-ai/android](https://github.com/vatio-ai/android)
    (`example/src/main/kotlin/ai/vatio/example/Views.kt`) or
    [vatio-ai/flutter](https://github.com/vatio-ai/flutter) (`example/lib/views.dart`).
+   For more than one screen (the conversation list, photos, voice notes, the
+   feedback card, settings), read a whole app built on the SDK:
+   [Vatio Chat for iOS](https://github.com/vatio-ai/vatio-chat-ios) or [for Android](https://github.com/vatio-ai/vatio-chat-android); each README
+   says which file shows what. A web app with Supabase sign-in that already
+   has the widget: [vatio-ai/example-nextjs-supabase](https://github.com/vatio-ai/example-nextjs-supabase).
 5. **Signed-in users.** With `auth: supabase:` the web widget needs nothing
    and the SDKs take the session's access token; with `auth: public_key:` the
    app's backend signs the visitor token, and the private key never goes into
