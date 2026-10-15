@@ -26,8 +26,8 @@ contract for `vatio.yml`, tools, knowledge and the CLI.
 - **The app.** What the project does and for whom; the API an agent could
   call (routes, controllers, an OpenAPI file); how its users sign in; and the
   docs, FAQs or policies an agent could read as knowledge.
-- **This machine.** `vatio doctor`: whether it is signed in, which
-  workspace this directory resolves to, and whether it pushed to a trial.
+- **This machine.** `vatio doctor`: whether it is signed in, and which
+  workspace this directory resolves to.
 
 ## 2. Say what you found, and recommend
 
@@ -46,17 +46,11 @@ you recommend, and ask them to confirm.
      team when a person should take over: **Human in the loop** in the docs).
   3. `vatio diff`, `vatio push`, then try it with `vatio chat`, including a
      conversation that should hand off.
-  4. Give them what `vatio push` printed, with what you tried. With no
-     account on this machine, the first push deploys a trial preview and
-     prints a **Try it** link and a **Keep it** link: give them both. Try it
-     is a web chat anyone with the link can use; Keep it is where they sign
-     in (email, Google or GitHub) and keep the agent, which publishing,
-     secrets and tokens wait for. Never open Keep it yourself. Signed in,
-     `Try it:` is the inbox's Test page, with web chat, WhatsApp and
-     Instagram. Publish with `vatio publish` only when they ask.
+  4. Give them the link `vatio push` prints after `Try it:` (the inbox's
+     Test page, with web chat, WhatsApp and Instagram) with what you
+     tried. Publish with `vatio publish` only when they ask.
   5. Once they have tried it, offer to put it in the app (the web widget,
-     or the iOS, Android or Flutter SDK) with the `vatio-add-to-app` skill. A trial
-     has to be kept first.
+     or the iOS, Android or Flutter SDK) with the `vatio-add-to-app` skill.
 - **A `vatio.yml`: the agent exists.** Never `vatio init` here: it writes a
   starter agent, and pushing that replaces the real one. Work from the
   directory of the `vatio.yml` and follow **Joining an existing workspace**:
@@ -96,14 +90,12 @@ that same section.
    the `vatio-share-session` skill says. It starts with
    `vatio share-session --should-ask`: if that prints `no`, say nothing.
 
-`vatio` is `npx @vatio-ai/cli` when it is not installed globally. Nothing
-asks for an account until they keep the trial (or you run `vatio login`).
-Once they have kept it, the next `vatio` command signs this terminal in: it
-opens the browser on their machine (if it doesn't, give them the link it
-prints). Tell them to sign in with the account that kept it and check that
-the code on the page matches the one the terminal printed. If the command
-times out waiting, run it again after they have signed in: it picks up the
-same sign-in page.
+`vatio` is `npx @vatio-ai/cli` when it is not installed globally. The first
+`vatio push` (or `vatio login`) signs the developer in: it opens the browser
+on their machine (if it doesn't, give them the link it prints). Tell them to
+sign in with email, Google or GitHub and check that the code on the page
+matches the one the terminal printed. If the command times out waiting, run
+it again after they have signed in: it picks up the same sign-in page.
 
 A command you hand the developer to run themselves, because a permission
 check refused it or it needs their own credentials, says

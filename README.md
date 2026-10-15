@@ -19,7 +19,7 @@ need your app’s project on your computer and Node.js 20 or newer.
 
 | Skill | What it does |
 |---|---|
-| `vatio-init` | The first one in a project: looks at what is already there (a `vatio.yml` anywhere in the repository, the app's code) and recommends from it. With no agent yet, builds one: asks the owner what the code does not answer, writes `vatio.yml`, pushes it (with no account, as a trial) and hands over a link to try it and one to keep it. With one, gets a developer who joined the project up to speed |
+| `vatio-init` | The first one in a project: looks at what is already there (a `vatio.yml` anywhere in the repository, the app's code) and recommends from it. With no agent yet, builds one: asks the owner what the code does not answer, writes `vatio.yml`, pushes it and hands over a link to try. With one, gets a developer who joined the project up to speed |
 | `vatio-add-to-app` | Puts the agent in your app once you have tried it: the web widget, or the iOS, Android or Flutter SDK with a chat screen in your app's style, a publishable token for development and one for release, and your signed-in users passed along |
 | `vatio-improve` | Takes every reply your supervisors reported in the inbox in one session: reads `vatio flags`, fixes each cause, `vatio push`, proves it with `vatio test` (on Vatio's servers, in the background) and publishes with `vatio publish` after your approval |
 | `vatio-analyze` | Reads what people talked about with the agent between two dates, from `vatio chat export` (redacted by Vatio before it leaves): topics with their counts, the questions it could not answer and the words people use, in a report for writing content, FAQs or knowledge. Anyone on the workspace's team can run it, viewers included |
