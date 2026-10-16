@@ -59,6 +59,36 @@ name: `/vatio-init`, `/vatio-add-to-app`, `/vatio-improve`, `/vatio-analyze` and
 `vatio init` also writes a pointer to `vatio flags` into the workspace's
 `AGENTS.md`, which most coding agents read without installing anything.
 
+## What it runs and sends
+
+The skills are instructions for your coding agent, with no hooks, MCP servers
+or anything that runs by itself. What they have your agent run is one
+program, the [Vatio CLI](https://github.com/vatio-ai/cli)
+(`npx @vatio-ai/cli`, downloaded from npm), and it talks to one service,
+[vatio.ai](https://vatio.ai):
+
+- **Sign-in.** The first `vatio push` (or `vatio login`) opens vatio.ai in your
+  browser; the token it gets back is saved in `~/.vatio/config.json`.
+- **Your agent's files.** `vatio check` and `vatio push` send the directory
+  that holds `vatio.yml` (its tools and knowledge, never hidden files such as
+  `.env` or `.git/`) to vatio.ai, which runs the agent. `vatio secrets set`
+  sends a secret you name, stored encrypted.
+- **Conversations.** `vatio chat` sends what you type to your agent.
+  `vatio flags`, `vatio chat show` and `vatio chat export` (redacted by Vatio
+  before it leaves) bring your workspace's conversations to your terminal.
+  `vatio docs` fetches the docs.
+- **How each command ended.** The CLI tells Vatio which command ran, its exit
+  code and, on failure, what it printed; never arguments, file contents,
+  secrets or what a chat said. `VATIO_TELEMETRY=0` turns it off.
+- **Feedback.** `vatio feedback "..."` sends the text your agent writes about
+  what got in its way.
+- **Your coding session, only if you say yes.** `vatio-share-session` shows
+  you what would go (images left out, anything that looks like a secret
+  redacted) and sends it to the Vatio team only after you agree.
+
+What Vatio keeps and for how long is in its
+[privacy policy](https://vatio.ai/legal/privacy-policy).
+
 ## Docs
 
 [Improve your agent from flags](https://vatio.ai/docs/improve) ·
