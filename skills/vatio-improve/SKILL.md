@@ -40,7 +40,12 @@ In short:
    failing tool rarely gets reported, because the agent apologizes and moves
    on. Fix those too.
 3. `vatio push`. It updates preview and runs no tests. No branch or
-   environment to set up: preview is the one.
+   environment to set up: preview is the one. If it is refused because
+   preview has changes made outside the files (someone edited the agent from
+   the Vatio MCP in Claude or ChatGPT), run `vatio pull`, which writes them
+   into `vatio.yml` and `tools/` (commit your work first: it wants a clean
+   git tree), check `git diff` still carries your fix, and push again. Never
+   `vatio push --force` over them unless the developer says so.
 4. `vatio test` tests every report against preview, on Vatio's servers: it
    starts the runs, prints their ids and returns. `vatio test --wait` waits
    for the report (several minutes), so in Claude Code start that with the

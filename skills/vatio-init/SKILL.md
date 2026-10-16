@@ -59,13 +59,18 @@ you recommend, and ask them to confirm.
   `vatio.yml` (what it is for, its tools, its knowledge, when it hands off)
   and recommend from what you see:
   - the folder differs from live: say so first, the repository may be behind;
+  - `vatio status` lists changes made outside the files (from the Vatio MCP
+    in Claude or ChatGPT): `vatio pull` writes them into `vatio.yml` and
+    `tools/` before anything is pushed;
   - open reports in `vatio flags`: work them with the `vatio-improve` skill;
   - tool calls failing in `vatio tools`: the fix is in the backend they call;
   - `workspace_forbidden`: they are not in the workspace yet, and the owner
     invites them from **Team** in the inbox.
 - **A workspace slug but no `vatio.yml`.** Ask for the repository it lives
-  in: Vatio keeps what was deployed, not the files it came from. Do not
-  `vatio init` one instead.
+  in. If it was built from the Vatio MCP in Claude or ChatGPT, it has none
+  yet: `vatio init SLUG` in the repository it should live in, then, before
+  any push, `vatio pull --force` to replace the starter agent with the one
+  Vatio runs. Otherwise do not `vatio init` one instead.
 
 ## Claude Code permissions
 
