@@ -63,7 +63,9 @@ In short:
    marked "not tested (Vatio's side)" says nothing about your fix: run
    `vatio test --wait` again. Name reports by id (`F-7K2QX`).
 5. Show the developer what passes now, and `vatio publish` once they agree:
-   it changes what visitors get. If it is refused, follow its message: it
+   it changes what visitors get. In a draft (no conversation from outside
+   the team yet) live already runs every push, and `vatio publish` says
+   there is nothing to publish. If it is refused, follow its message: it
    says what to run. Never pass `--force` unless the developer explicitly
    asks for it.
 6. If the digest, an error or the docs left you guessing, say so:

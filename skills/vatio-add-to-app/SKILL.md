@@ -50,8 +50,10 @@ SDK, Android SDK, Flutter SDK, Authentication, Supabase) have the details.
    app's backend signs the visitor token, and the private key never goes into
    the app.
 6. **Try it in a development build**, signed out and signed in, then say what
-   you added and where each token lives. Release builds answer once the agent
-   is published: `vatio publish` only when they ask.
+   you added and where each token lives. While the workspace is a draft
+   (nobody outside the team has talked to the agent yet) live follows every
+   push, so release builds answer right away; after that they answer with
+   what is published, and `vatio publish` runs only when they ask.
 
 ## Before you finish
 

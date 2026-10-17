@@ -48,7 +48,11 @@ you recommend, and ask them to confirm.
      conversation that should hand off.
   4. Give them the link `vatio push` prints after `Try it:` (the inbox's
      Test page, with web chat, WhatsApp and Instagram) with what you
-     tried. Publish with `vatio publish` only when they ask.
+     tried. Until someone outside their team talks to the agent the
+     workspace is a draft: live follows every push, so there is nothing to
+     publish yet and you need not explain preview and live. Once `vatio push`
+     says live still runs an older version, publish with `vatio publish`
+     only when they ask.
   5. Once they have tried it, offer to put it in the app (the web widget,
      or the iOS, Android or Flutter SDK) with the `vatio-add-to-app` skill.
 - **A `vatio.yml`: the agent exists.** Never `vatio init` here: it writes a
