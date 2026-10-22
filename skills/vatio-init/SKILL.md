@@ -1,6 +1,6 @@
 ---
 name: vatio-init
-description: The first Vatio skill in a project. Looks at what is already there — a vatio.yml anywhere in the repository, the workspace on the platform, the app's own code — and recommends from it, then either builds a customer-facing AI agent (in the app first, through its web widget or mobile SDK, and on WhatsApp or Instagram when asked) and gets it to the Test page in the Vatio inbox, or gets a developer who joined a project that already has one up to speed. Use when asked to create, set up, start or ship a Vatio agent, a chatbot or a support/sales assistant on Vatio, to get started on or onboard onto a project that uses Vatio, or when the user pastes the prompt from vatio.ai.
+description: The first Vatio skill in a project. Looks at what is already there — a vatio.yml anywhere in the repository, the workspace on the platform, the app's own code — and recommends from it, then either builds a customer-facing AI agent (in the app first, through its web widget or mobile SDK, and on WhatsApp or Instagram when asked) and gets it to Try the agent in the Vatio inbox, or gets a developer who joined a project that already has one up to speed. Use when asked to create, set up, start or ship a Vatio agent, a chatbot or a support/sales assistant on Vatio, to get started on or onboard onto a project that uses Vatio, or when the user pastes the prompt from vatio.ai.
 ---
 
 # Start with Vatio in this project
@@ -54,8 +54,8 @@ you recommend, and ask them to confirm.
      `vatio publish` refuses a version that breaks one. A workspace with no
      tests publishes with nothing checked, which is how a fix for one
      question quietly breaks another.
-  5. Give them the link `vatio push` prints after `Try it:` (the inbox's
-     Test page, with web chat, WhatsApp and Instagram) with what you
+  5. Give them the link `vatio push` prints after `Try it:` (the inbox
+     with Try the agent open: web chat, WhatsApp and Instagram) with what you
      tried. Until someone outside their team talks to the agent the
      workspace is a draft: `vatio push` is the deploy, so there is nothing to
      publish yet and you need not explain preview and live. Every push says
