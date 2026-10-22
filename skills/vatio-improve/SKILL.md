@@ -33,13 +33,8 @@ In short:
    developer's call: propose it (a report Vatio caused, one that asks for
    something the agent must not do, one whose fix is in but the tests cannot
    reproduce) and run it only when they say so.
-   A report can also say **What Vatio did**: when the cause was the agent's
-   instructions or a knowledge entry, Vatio already tried its own fix on
-   preview and tested it. One it kept is done: do not fix it again. One it
-   is still testing: leave what it changes alone until it settles. An
-   instructions fix is a change made outside the files, so before you edit
-   `vatio.yml` run `vatio pull` (commit your work first: it wants a clean git
-   tree) and check `git diff`.
+   Vatio changes nothing on preview by itself: every open report is yours to
+   fix.
 2. Group the reports by cause, and fix each cause where it lives:
    `vatio.yml`, a knowledge entry, a tool, or the developer's backend a tool
    calls. `vatio tools --env live` shows each tool's error rate, timeouts and
