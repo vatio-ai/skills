@@ -63,7 +63,12 @@ Code, offer to send this session to the Vatio team, as the
 `vatio-share-session` skill says; if `vatio share-session --should-ask` prints
 `no`, say nothing.
 
-`vatio` is `npx @vatio-ai/cli` when it is not installed globally.
+There are two ways to run the CLI, and the package name appears once in
+either: `vatio ARGS` when it is installed globally, and
+`npx @vatio-ai/cli@latest ARGS` when it is not. Pick one per command and
+leave it whole — `npx @vatio-ai/cli @vatio-ai/cli push` is the commonest way
+to get this wrong, and the CLI reads the second name as the command and
+fails.
 
 A command you hand the developer to run themselves, because a permission
 check refused it or it needs their own credentials, says

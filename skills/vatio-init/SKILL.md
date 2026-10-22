@@ -46,14 +46,22 @@ you recommend, and ask them to confirm.
      team when a person should take over: **Human in the loop** in the docs).
   3. `vatio diff`, `vatio push`, then try it with `vatio chat`, including a
      conversation that should hand off.
-  4. Give them the link `vatio push` prints after `Try it:` (the inbox's
+  4. **Keep the replies that came out right.** For each one,
+     `vatio test add "what the answer has to say"` right after the
+     `vatio chat` that produced it. Three or four is enough to start. This is
+     the only thing that makes a later version's mistake visible: `vatio
+     test` replays them on every push, and once the workspace is published
+     `vatio publish` refuses a version that breaks one. A workspace with no
+     tests publishes with nothing checked, which is how a fix for one
+     question quietly breaks another.
+  5. Give them the link `vatio push` prints after `Try it:` (the inbox's
      Test page, with web chat, WhatsApp and Instagram) with what you
      tried. Until someone outside their team talks to the agent the
-     workspace is a draft: live follows every push, so there is nothing to
-     publish yet and you need not explain preview and live. Once `vatio push`
-     says live still runs an older version, publish with `vatio publish`
-     only when they ask.
-  5. Once they have tried it, offer to put it in the app (the web widget,
+     workspace is a draft: `vatio push` is the deploy, so there is nothing to
+     publish yet and you need not explain preview and live. Every push says
+     which of the two states the workspace is in; once it says visitors still
+     get an older version, publish with `vatio publish` only when they ask.
+  6. Once they have tried it, offer to put it in the app (the web widget,
      or the iOS, Android or Flutter SDK) with the `vatio-add-to-app` skill.
 - **A `vatio.yml`: the agent exists.** Never `vatio init` here: it writes a
   starter agent, and pushing that replaces the real one. Work from the
@@ -99,7 +107,12 @@ that same section.
    the `vatio-share-session` skill says. It starts with
    `vatio share-session --should-ask`: if that prints `no`, say nothing.
 
-`vatio` is `npx @vatio-ai/cli` when it is not installed globally. The first
+There are two ways to run the CLI, and the package name appears once in
+either: `vatio ARGS` when it is installed globally, and
+`npx @vatio-ai/cli@latest ARGS` when it is not. Pick one per command and
+leave it whole — `npx @vatio-ai/cli @vatio-ai/cli push` is the commonest way
+to get this wrong, and the CLI reads the second name as the command and
+fails. The first
 `vatio push` (or `vatio login`) signs the developer in: it opens the browser
 on their machine (if it doesn't, give them the link it prints). Tell them to
 sign in with email, Google or GitHub and check that the code on the page
@@ -115,3 +128,10 @@ another (a token into a secrets store), take it with `--json` and chain with
 empty value. If Claude Code's auto mode refused a `vatio` command and the
 project's `.claude/settings.json` has no `Bash(vatio *)` rule, also mention
 **Auto mode** on the docs' Claude Code page.
+
+A **secret** is not one of those commands, as long as you do not read it.
+`vatio secrets set KEY --from-env` takes the value from their shell or the
+`.env` beside the `vatio.yml` and sends it without printing it, so run that
+yourself rather than stopping to ask. Ask them only for a value that is not
+there yet, and never echo one back, put one in a file you write, or read a
+`.env` to quote it.

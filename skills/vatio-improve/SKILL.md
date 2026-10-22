@@ -75,8 +75,12 @@ In short:
    `vatio share-session --should-ask`: if that prints `no`, say nothing.
 
 `vatio docs` prints the whole contract (manifest, tools, knowledge, CLI) if
-the fix needs more than the digest says. If `vatio` is not installed, use
-`npx @vatio-ai/cli` in its place; if it says to log in, run `vatio login`: it
+the fix needs more than the digest says. There are two ways to run the CLI,
+and the package name appears once in either: `vatio ARGS` when it is
+installed globally, and `npx @vatio-ai/cli@latest ARGS` when it is not. Pick
+one per command and leave it whole — `npx @vatio-ai/cli @vatio-ai/cli flags`
+is the commonest way to get this wrong, and the CLI reads the second name as
+the command and fails. If it says to log in, run `vatio login`: it
 opens the browser on the developer's machine (if it doesn't, give them the
 link it prints), and they sign in and check the code matches. If it times
 out, run it again after they have signed in.
