@@ -123,7 +123,7 @@ A command you hand the developer to run themselves, because a permission
 check refused it or it needs their own credentials, says
 `npx @vatio-ai/cli@latest`, never `vatio`: the `vatio` installed on their
 machine can be too old for Vatio to accept. When one command's output feeds
-another (a token into a secrets store), take it with `--json` and chain with
+another (a key into a secrets store), take it with `--json` and chain with
 `&&`, never through `grep`, so a failure stops there instead of passing on an
 empty value. If Claude Code's auto mode refused a `vatio` command and the
 project's `.claude/settings.json` has no `Bash(vatio *)` rule, also mention

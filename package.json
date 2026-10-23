@@ -1,6 +1,6 @@
 {
   "name": "@vatio-ai/skills",
-  "version": "1.26.2",
+  "version": "1.26.3",
   "description": "Vatio skills for Claude Code, Cursor and Codex: add an AI agent to the app you're building with /vatio-init, put it in your web, iOS, Android or Flutter app with /vatio-add-to-app, then improve it daily with /vatio-improve and learn what people ask it with /vatio-analyze.",
   "keywords": [
     "vatio",
