@@ -17,7 +17,7 @@ npx @vatio-ai/cli docs
 
 Under **For coding agents**, follow **Putting the agent in the app**. It takes
 precedence over the summary below, and the pages it links (Web widget, iOS
-SDK, Android SDK, Flutter SDK, Authentication, Supabase) have the details.
+SDK, Android SDK, Flutter SDK, Authentication) have the details.
 
 ## In short
 
@@ -43,12 +43,10 @@ SDK, Android SDK, Flutter SDK, Authentication, Supabase) have the details.
    For more than one screen (the conversation list, photos, voice notes, the
    feedback card, settings), read a whole app built on the SDK:
    [Vatio Chat for iOS](https://github.com/vatio-ai/vatio-chat-ios) or [for Android](https://github.com/vatio-ai/vatio-chat-android); each README
-   says which file shows what. A web app with Supabase sign-in that already
-   has the widget: [vatio-ai/example-nextjs-supabase](https://github.com/vatio-ai/example-nextjs-supabase).
-5. **Signed-in users.** With `auth: supabase:` the web widget needs nothing
-   and the SDKs take the session's access token; with `auth: public_key:` the
-   app's backend signs the visitor token, and the private key never goes into
-   the app.
+   says which file shows what.
+5. **Signed-in users.** The app's own backend signs the visitor token (`vatio auth --new-key`,
+   then `auth: public_key:` in `vatio.yml`), the web widget and the SDKs take
+   it, and the private key never goes into the app.
 6. **Try it in a development build**, signed out and signed in, then say what
    you added and where each key lives. While the workspace is a draft
    (nobody outside the team has talked to the agent yet) live follows every
