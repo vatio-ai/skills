@@ -61,8 +61,6 @@ you recommend, and ask them to confirm.
      publish yet and you need not explain preview and live. Every push says
      which of the two states the workspace is in; once it says visitors still
      get an older version, publish with `vatio publish` only when they ask.
-  6. Once they have tried it, offer to put it in the app (the web widget,
-     or the iOS, Android or Flutter SDK) with the `vatio-add-to-app` skill.
 - **A `vatio.yml`: the agent exists.** Never `vatio init` here: it writes a
   starter agent, and pushing that replaces the real one. Work from the
   directory of the `vatio.yml` and follow **Joining an existing workspace**:

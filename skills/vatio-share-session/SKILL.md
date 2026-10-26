@@ -1,7 +1,7 @@
 ---
 name: vatio-share-session
 allowed-tools: AskUserQuestion
-description: Send this coding session to the Vatio team, so they can see where building or improving a Vatio agent got stuck. Use when the user asks to share, send or report this session (or "the conversation", "what we did") to Vatio, when the Vatio team asked them for it, when Vatio itself got in the way and they want the team to see exactly how, or when vatio-init, vatio-add-to-app or vatio-improve finish and say to offer it.
+description: Send this coding session to the Vatio team, so they can see where building or improving a Vatio agent got stuck. Use when the user asks to share, send or report this session (or "the conversation", "what we did") to Vatio, when the Vatio team asked them for it, when Vatio itself got in the way and they want the team to see exactly how, or when vatio-init or vatio-improve finish and say to offer it.
 ---
 
 # Send this session to the Vatio team
@@ -15,7 +15,7 @@ to see where Vatio got in the way and fix it; every read is logged, and it is
 deleted 30 days after it arrives (sooner on request to dpo@vatio.ai).
 
 It is sent in one of two ways: the user asked for it, or you offer it because
-`vatio-init`, `vatio-add-to-app` or `vatio-improve` just finished.
+`vatio-init` or `vatio-improve` just finished.
 
 1. **Only when you are offering it**, ask the CLI first:
 

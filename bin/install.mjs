@@ -10,8 +10,8 @@ import { fileURLToPath } from "node:url";
 
 const usage = `usage: npx @vatio-ai/skills [--dir PATH]
 
-Copies the Vatio skills (vatio-init, vatio-add-to-app, vatio-improve,
-vatio-analyze, vatio-share-session) into PATH/.agents/skills and
+Copies the Vatio skills (vatio-init, vatio-improve, vatio-analyze,
+vatio-share-session) into PATH/.agents/skills and
 PATH/.claude/skills. PATH defaults to the current directory.`;
 
 const args = process.argv.slice(2);
@@ -39,9 +39,9 @@ const source = join(dirname(fileURLToPath(import.meta.url)), "..", "skills");
 // older than the published skills (cli/lib/skills-hint.mjs).
 const VERSION_FILE = ".vatio-skills-version";
 const { version } = JSON.parse(readFileSync(join(source, "..", "package.json"), "utf8"));
-// Skills this package used to ship under another name. Left in place, the old
-// copy would answer the same requests as the new one.
-const RENAMED = { "vatio-new": "vatio-init" };
+// Skills this package used to ship, and what replaced them (null: nothing).
+// Left in place, an old copy would keep answering requests.
+const RETIRED = { "vatio-new": "vatio-init", "vatio-add-to-app": null };
 const skills = readdirSync(source, { withFileTypes: true })
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name);
@@ -53,11 +53,11 @@ for (const target of [".agents/skills", ".claude/skills"]) {
     writeFileSync(join(dest, VERSION_FILE), `${version}\n`);
     console.log(`  ${relative(process.cwd(), join(dest, "SKILL.md")) || dest}`);
   }
-  for (const [old, current] of Object.entries(RENAMED)) {
+  for (const [old, current] of Object.entries(RETIRED)) {
     const dest = join(root, target, old);
     if (!installedByUs(dest, old)) continue;
     rmSync(dest, { recursive: true, force: true });
-    console.log(`  removed ${relative(process.cwd(), dest) || dest} (now ${current})`);
+    console.log(`  removed ${relative(process.cwd(), dest) || dest}${current ? ` (now ${current})` : ""}`);
   }
 }
 
