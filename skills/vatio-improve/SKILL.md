@@ -40,7 +40,12 @@ In short:
    calls. `vatio tools --env live` shows each tool's error rate, timeouts and
    latency, and the calls that failed with what the backend answered: a
    failing tool rarely gets reported, because the agent apologizes and moves
-   on. Fix those too.
+   on. Fix those too. The digest ends with the tests the agent answers
+   differently each time (the same version passes and fails them): work
+   those too, as its section says. Usually the agent is inconsistent and
+   the fix is in `vatio.yml` or knowledge; when the note is what is vague,
+   rewrite it; when it no longer applies, propose removing it to the
+   developer. Never remove a test because it fails.
 3. `vatio push`. It updates preview and runs no tests. No branch or
    environment to set up: preview is the one. If it is refused because
    preview has changes made outside the files (someone edited the agent from
