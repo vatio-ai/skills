@@ -45,7 +45,9 @@ you recommend, and ask them to confirm.
      `vatio.yml` (and `tools/` for their APIs, with one that alerts their
      team when a person should take over: **Human in the loop** in the docs).
   3. `vatio diff`, `vatio push`, then try it with `vatio chat`, including a
-     conversation that should hand off.
+     conversation that should hand off. A tool that needs the visitor's
+     phone or a team role runs with `vatio chat --as-phone me` (or a test
+     phone); an `access: private` one with `--as-subject ID`.
   4. **Keep the replies that came out right.** For each one,
      `vatio test add "what the answer has to say"` right after the
      `vatio chat` that produced it. Three or four is enough to start. This is

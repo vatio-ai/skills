@@ -56,7 +56,8 @@ In short:
    comes with the `vatio chat show CHAT_ID` of its replay. Iterate (fix, push,
    test) until the reports pass and nothing that passes on live fails. A case
    marked "not tested (Vatio's side)" says nothing about your fix: run
-   `vatio test --wait` again. Name reports by id (`F-7K2QX`).
+   `vatio test --wait` again. One not tested because a tool needs a
+   signed-in visitor replays signed in with `vatio test --as-subject ID`. Name reports by id (`F-7K2QX`).
 5. Show the developer what passes now, and `vatio publish` once they agree:
    it changes what visitors get. In a draft (no conversation from outside
    the team yet) live already runs every push, and `vatio publish` says
