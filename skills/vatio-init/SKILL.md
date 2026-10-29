@@ -48,9 +48,11 @@ you recommend, and ask them to confirm.
      conversation that should hand off. A tool that needs the visitor's
      phone or a team role runs with `vatio chat --as-phone me` (or a test
      phone); an `access: private` one with `--as-subject ID`.
-  4. **Keep the replies that came out right.** For each one,
-     `vatio test add "what the answer has to say"` right after the
-     `vatio chat` that produced it. Three or four is enough to start. This is
+  4. **Write down what it should do as tests.** For each question that
+     matters, `vatio test add "what a visitor would ask" "what the answer has
+     to do"`: it asks it on preview and says whether it passes now (add
+     `--as-phone` or `--as-subject` as in `vatio chat`). Three or four is
+     enough to start. This is
      the only thing that makes a later version's mistake visible: `vatio
      test` replays them on every push, and once the workspace is published
      `vatio publish` refuses a version that breaks one. A workspace with no
@@ -74,7 +76,7 @@ you recommend, and ask them to confirm.
   - `vatio status` lists changes made outside the files (from the Vatio MCP
     in Claude or ChatGPT): `vatio pull` writes them into `vatio.yml` and
     `tools/` before anything is pushed;
-  - open reports in `vatio flags`: work them with the `vatio-improve` skill;
+  - open reports in `vatio test list`: work them with the `vatio-improve` skill;
   - tool calls failing in `vatio tools`: the fix is in the backend they call;
   - `workspace_forbidden`: they are not in the workspace yet, and the owner
     invites them from **Team** in the inbox.

@@ -12,13 +12,16 @@ instructions for working them on the platform, so they are never out of date
 here. Start by reading them:
 
 ```bash
-vatio flags
+vatio test list
 ```
 
-Run it from the directory with the workspace's `vatio.yml` (or below it). It
-prints every open report — the conversation, each tool call with what the
-backend answered, and the supervisor's note — with how to work them at the
-top. Follow those instructions; they take precedence over anything below.
+(`vatio flags` on a CLI older than 0.120.0.) Run it from the directory with
+the workspace's `vatio.yml` (or below it). It prints every open report — the
+conversation, each tool call with what the backend answered, and the
+supervisor's note — then the tests that fail on preview and the ones the
+agent answers differently each time, with how to work them at the top, and
+every test last. Follow those instructions; they take precedence over
+anything below.
 
 In short:
 
@@ -29,7 +32,7 @@ In short:
    provider or Vatio failed and Vatio wrote the reply itself. Do not change
    the agent for those: tell the developer, who can remove the report, and
    if they keep happening, `vatio feedback`.
-   `vatio flags rm ID` removes a report and its test for everyone. It is the
+   `vatio test rm ID` removes a report and its test for everyone. It is the
    developer's call: propose it (a report Vatio caused, one that asks for
    something the agent must not do, one whose fix is in but the tests cannot
    reproduce) and run it only when they say so.
@@ -40,12 +43,17 @@ In short:
    calls. `vatio tools --env live` shows each tool's error rate, timeouts and
    latency, and the calls that failed with what the backend answered: a
    failing tool rarely gets reported, because the agent apologizes and moves
-   on. Fix those too. The digest ends with the tests the agent answers
-   differently each time (the same version passes and fails them): work
-   those too, as its section says. Usually the agent is inconsistent and
-   the fix is in `vatio.yml` or knowledge; when the note is what is vague,
-   rewrite it; when it no longer applies, propose removing it to the
-   developer. Never remove a test because it fails.
+   on. Fix those too. After the reports come the tests that fail on preview
+   (one the developer added for something the agent does not do yet, or a
+   regression) and the tests the agent answers differently each time (the
+   same version passes and fails them): work those too, as their sections
+   say. For an unsteady one the agent is usually inconsistent and the fix is
+   in `vatio.yml` or knowledge; when the note is what is vague, rewrite it;
+   when it no longer applies, propose removing it to the developer. Never
+   remove a test because it fails. Something the developer asks the agent to
+   do that no report covers is a test first:
+   `vatio test add "QUESTION" "WHAT IT SHOULD DO"` asks it on preview and
+   says whether it passes now; then fix until it does.
 3. `vatio push`. It updates preview and runs no tests. No branch or
    environment to set up: preview is the one. If it is refused because
    preview has changes made outside the files (someone edited the agent from

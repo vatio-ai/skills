@@ -35,7 +35,7 @@ if (!existsSync(root)) {
 }
 
 const source = join(dirname(fileURLToPath(import.meta.url)), "..", "skills");
-// Left next to each copy, so `vatio flags` can tell a project whose copies are
+// Left next to each copy, so `vatio test list` can tell a project whose copies are
 // older than the published skills (cli/lib/skills-hint.mjs).
 const VERSION_FILE = ".vatio-skills-version";
 const { version } = JSON.parse(readFileSync(join(source, "..", "package.json"), "utf8"));

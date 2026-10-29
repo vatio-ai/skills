@@ -20,13 +20,13 @@ need your app’s project on your computer and Node.js 20 or newer.
 | Skill | What it does |
 |---|---|
 | `vatio-init` | The first one in a project: looks at what is already there (a `vatio.yml` anywhere in the repository, the app's code) and recommends from it. With no agent yet, builds one: asks the owner what the code does not answer, writes `vatio.yml`, pushes it and hands over a link to try. With one, gets a developer who joined the project up to speed |
-| `vatio-improve` | Takes every reply your supervisors reported in the inbox in one session: reads `vatio flags`, fixes each cause, `vatio push`, proves it with `vatio test` (on Vatio's servers, in the background) and publishes with `vatio publish` after your approval |
+| `vatio-improve` | Takes every reply your supervisors reported in the inbox in one session: reads `vatio test list`, fixes each cause, `vatio push`, proves it with `vatio test` (on Vatio's servers, in the background) and publishes with `vatio publish` after your approval |
 | `vatio-analyze` | Reads what people talked about with the agent between two dates, from `vatio chat export` (redacted by Vatio before it leaves): topics with their counts, the questions it could not answer and the words people use, in a report for writing content, FAQs or knowledge. Anyone on the workspace's team can run it, viewers included |
 | `vatio-share-session` | Sends the coding session to the Vatio team when you ask it to, or offers to when the others finish (send it, not now, or don't ask again), after showing you what goes (images left out, anything that looks like a secret redacted), with your feedback if you want to add some |
 
 The skills are short on purpose. They tell your coding agent when to reach for
 the Vatio CLI; the instructions themselves come from the platform when it runs
-`vatio docs` or `vatio flags`, so they are never out of date.
+`vatio docs` or `vatio test list`, so they are never out of date.
 
 ## Install
 
@@ -55,7 +55,7 @@ Vatio, or you can call them by
 name: `/vatio-init`, `/vatio-improve`, `/vatio-analyze` and `/vatio-share-session`, or
 `/vatio:vatio-init` and so on from the plugin.
 
-`vatio init` also writes a pointer to `vatio flags` into the workspace's
+`vatio init` also writes a pointer to `vatio test list` into the workspace's
 `AGENTS.md`, which most coding agents read without installing anything.
 
 ## What it runs and sends
@@ -73,7 +73,7 @@ program, the [Vatio CLI](https://github.com/vatio-ai/cli)
   `.env` or `.git/`) to vatio.ai, which runs the agent. `vatio secrets set`
   sends a secret you name, stored encrypted.
 - **Conversations.** `vatio chat` sends what you type to your agent.
-  `vatio flags`, `vatio chat show` and `vatio chat export` (redacted by Vatio
+  `vatio test list`, `vatio chat show` and `vatio chat export` (redacted by Vatio
   before it leaves) bring your workspace's conversations to your terminal.
   `vatio docs` fetches the docs.
 - **How each command ended.** The CLI tells Vatio which command ran, its exit
