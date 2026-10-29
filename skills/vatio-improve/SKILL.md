@@ -82,8 +82,10 @@ In short:
    the `vatio-share-session` skill says. It starts with
    `vatio share-session --should-ask`: if that prints `no`, say nothing.
 
-`vatio docs` prints the whole contract (manifest, tools, knowledge, CLI) if
-the fix needs more than the digest says. There are two ways to run the CLI,
+If the fix needs more than the digest says, `vatio docs search TERM` prints
+the sections of the docs that mention something, with their page,
+`vatio docs PAGE` one page (`tools`, `knowledge`), and `vatio docs` the whole
+contract (manifest, tools, knowledge, CLI). There are two ways to run the CLI,
 and the package name appears once in either: `vatio ARGS` when it is
 installed globally, and `npx @vatio-ai/cli@latest ARGS` when it is not. Pick
 one per command and leave it whole — `npx @vatio-ai/cli @vatio-ai/cli flags`
