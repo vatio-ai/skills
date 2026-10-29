@@ -77,8 +77,10 @@ program, the [Vatio CLI](https://github.com/vatio-ai/cli)
   before it leaves) bring your workspace's conversations to your terminal.
   `vatio docs` fetches the docs.
 - **How each command ended.** The CLI tells Vatio which command ran, its exit
-  code and, on failure, what it printed; never arguments, file contents,
-  secrets or what a chat said. `VATIO_TELEMETRY=0` turns it off.
+  code, how long it took, which version of these skills the project has and,
+  on failure, what it printed; never arguments, file contents, secrets or what
+  a chat said. Installing these skills tells Vatio once, with their version
+  and the coding agent. `VATIO_TELEMETRY=0` turns both off.
 - **Feedback.** `vatio feedback "..."` sends the text your agent writes about
   what got in its way.
 - **Your coding session, only if you say yes.** `vatio-share-session` shows
