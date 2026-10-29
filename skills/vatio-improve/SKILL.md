@@ -15,10 +15,9 @@ here. Start by reading them:
 vatio test list
 ```
 
-(`vatio flags` on a CLI older than 0.120.0.) Run it from the directory with
-the workspace's `vatio.yml` (or below it). It prints every open report — the
-conversation, each tool call with what the backend answered, and the
-supervisor's note — then the tests that fail on preview and the ones the
+Run it from the directory with the workspace's `vatio.yml` (or below it).
+It prints every open report — the conversation, each tool call with what
+the backend answered, and the supervisor's note — then the tests that fail on preview and the ones the
 agent answers differently each time, with how to work them at the top, and
 every test last. Follow those instructions; they take precedence over
 anything below.
