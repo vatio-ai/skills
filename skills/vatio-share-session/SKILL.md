@@ -9,8 +9,8 @@ description: Send this coding session to the Vatio team, so they can see where b
 `vatio share-session` sends the Claude Code session you are running in: what
 the user asked, what you read and ran, and what came back. It leaves out
 images, replaces anything that looks like a key, token or password with
-`[REDACTED]`, email addresses and international phone numbers with `[EMAIL]`
-and `[PHONE]`, and the home directory with `~`. Only the Vatio team reads it,
+`[REDACTED]`, email addresses, international phone numbers and Chilean RUTs
+with `[EMAIL]`, `[PHONE]` and `[RUT]`, and the home directory with `~`. Only the Vatio team reads it,
 to see where Vatio got in the way and fix it; every read is logged, and it is
 deleted 30 days after it arrives (sooner on request to dpo@vatio.ai).
 
