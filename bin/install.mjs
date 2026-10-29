@@ -4,10 +4,11 @@
 //   .agents/skills/   Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode, Cline, Amp
 //   .claude/skills/   Claude Code, which does not read .agents/
 // Running it again overwrites the copies with this version's.
+import { spawnSync } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { homedir } from "node:os";
-import { dirname, join, relative, resolve } from "node:path";
+import { homedir, platform } from "node:os";
+import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const usage = `usage: npx @vatio-ai/skills [--dir PATH]
@@ -116,7 +117,30 @@ function codingAgent() {
   if (env.GEMINI_CLI) return "gemini-cli";
   if (env.REPL_ID) return "replit";
   if (env.CI) return "ci";
-  return process.stdout.isTTY ? "human" : "unknown";
+  if (process.stdout.isTTY) return "human";
+  const parent = launcher();
+  return parent ? `unknown:${parent}` : "unknown";
+}
+
+// What started the installer, when no coding agent said so: the first
+// ancestor that is not a shell or Node, by its process name.
+function launcher() {
+  if (platform() === "win32") return null;
+  const skip = new Set(["sh", "bash", "zsh", "fish", "dash", "ksh", "env", "node", "npm", "npx", "pnpm", "yarn", "bun", "sudo", "xargs", "timeout", "login"]);
+  try {
+    let pid = process.ppid;
+    for (let depth = 0; depth < 6 && pid > 1; depth++) {
+      const out = spawnSync("ps", ["-o", "ppid=,comm=", "-p", String(pid)], { encoding: "utf8", timeout: 500 });
+      const match = /^\s*(\d+)\s+(.+?)\s*$/.exec(out.stdout ?? "");
+      if (!match) return null;
+      const name = basename(match[2]).replace(/^-/, "");
+      if (!skip.has(name)) return name.replace(/[^\w .-]/g, "").slice(0, 40) || null;
+      pid = Number(match[1]);
+    }
+  } catch {
+    return null;
+  }
+  return null;
 }
 
 // The CLI's session for this directory (~/.vatio/sessions.json), or a new
