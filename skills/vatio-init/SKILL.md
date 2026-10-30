@@ -49,8 +49,8 @@ you recommend, and ask them to confirm.
      team when a person should take over: **Human in the loop** in the docs).
   3. `vatio diff`, `vatio push`, then try it with `vatio chat`, including a
      conversation that should hand off. A tool that needs the visitor's
-     phone or a team role runs with `vatio chat --as-phone me` (or a test
-     phone); an `access: private` one with `--as-subject ID`. When visitors
+     phone or a team role runs with `vatio chat --as-phone me` (or a
+     customer phone); an `access: private` one with `--as-subject ID`. When visitors
      will send files (a PDF, a photo), send one with `vatio chat --file PATH
      "question"`: it says how much of a PDF the agent got.
   4. **Write down what it should do as tests.** For each question that
