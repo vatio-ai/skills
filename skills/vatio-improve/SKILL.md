@@ -1,23 +1,22 @@
 ---
 name: vatio-improve
-description: Improve a Vatio agent from what its supervisors reported. Use when asked to improve, fix or debug a Vatio agent, to work through reported or flagged replies or wrong answers in production, or when the daily Vatio email says there are open reports. Works in any directory with a vatio.yml.
+description: Improve a Vatio agent from what its supervisors reported, through the Vatio MCP. Use when asked to improve, fix or debug a Vatio agent, to work through reported or flagged replies or wrong answers in production, or when the daily Vatio email says there are open reports. Needs the Vatio MCP, not a vatio.yml.
 ---
 
 # Improve a Vatio agent from its reports
 
 Supervisors report wrong replies in the Vatio inbox and write what it should
 have said: a different answer, an action, or a tool the agent should have
-used or does not have. One session takes every open report. Vatio keeps the
-instructions for working them on the platform, so they are never out of date
-here. Start by reading them:
+used or does not have. One session takes every open report. You work through
+the Vatio MCP's tools; if you do not have them (`list_reports`,
+`update_agent`, `run_tests`…), connect it as the `vatio-init` skill's step 0
+says, and stop until they are there.
 
-```bash
-vatio test list
-```
-
-Run it from the directory with the workspace's `vatio.yml` (or below it).
-It prints every open report — the conversation, each tool call with what
-the backend answered, and the supervisor's note — then the tests that fail on preview and the ones the
+Vatio keeps the instructions for working the reports on the platform, so they
+are never out of date here. Start by reading them: `list_workspaces` for the
+slug (or the one the app names), then `list_reports`. It returns every open
+report (the conversation, each tool call with what the backend answered, and
+the supervisor's note), then the tests that fail on preview and the ones the
 agent answers differently each time, with how to work them at the top, and
 every test last. Follow those instructions; they take precedence over
 anything below.
@@ -27,80 +26,60 @@ In short:
 1. Read each report's **Diagnosis** first: it says whose it is to fix, from
    what that turn did. **Your backend**: a tool call to it failed. **Your
    agent**: everything answered and the reply was still wrong, so the fix is
-   in `vatio.yml`, knowledge or a tool's definition. **Vatio**: the model
-   provider or Vatio failed and Vatio wrote the reply itself. Do not change
-   the agent for those: tell the developer, who can remove the report, and
-   if they keep happening, `vatio feedback`.
-   `vatio test rm ID` removes a report and its test for everyone. It is the
+   in the agent's instructions, its knowledge or a tool's definition.
+   **Vatio**: the model provider or Vatio failed and Vatio wrote the reply
+   itself. Do not change the agent for those: tell the developer, who can
+   remove the report, and if they keep happening,
+   `npx @vatio-ai/cli@latest feedback "…"`.
+   `remove_test` removes a report and its test for everyone. It is the
    developer's call: propose it (a report Vatio caused, one that asks for
    something the agent must not do, one whose fix is in but the tests cannot
    reproduce) and run it only when they say so.
-   Vatio changes nothing on preview by itself: every open report is yours to
-   fix.
 2. Group the reports by cause, and fix each cause where it lives:
-   `vatio.yml`, a knowledge entry, a tool, or the developer's backend a tool
-   calls. `vatio tools --env live` shows each tool's error rate, timeouts and
-   latency, and the calls that failed with what the backend answered: a
-   failing tool rarely gets reported, because the agent apologizes and moves
-   on. Fix those too. After the reports come the tests that fail on preview
-   (one the developer added for something the agent does not do yet, or a
-   regression) and the tests the agent answers differently each time (the
-   same version passes and fails them): work those too, as their sections
-   say. For an unsteady one the agent is usually inconsistent and the fix is
-   in `vatio.yml` or knowledge; when the note is what is vague, rewrite it;
-   when it no longer applies, propose removing it to the developer. Never
-   remove a test because it fails. Something the developer asks the agent to
-   do that no report covers is a test first:
-   `vatio test add "QUESTION" "WHAT IT SHOULD DO"` asks it on preview and
-   says whether it passes now; then fix until it does.
-3. `vatio push`. It updates preview and runs no tests. No branch or
-   environment to set up: preview is the one. If it is refused because
-   preview has changes made outside the files (someone edited the agent from
-   the Vatio MCP in Claude or ChatGPT), run `vatio pull`, which writes them
-   into `vatio.yml` and `tools/` (commit your work first: it wants a clean
-   git tree), check `git diff` still carries your fix, and push again. Never
-   `vatio push --force` over them unless the developer says so.
-4. `vatio test` tests every report against preview, on Vatio's servers: it
-   starts the runs, prints their ids and returns. `vatio test --wait` waits
-   for the report (several minutes), so in Claude Code start that with the
-   Bash tool's `run_in_background` and read the report when it finishes;
-   `vatio test --show RUN_ID` prints a run so far. A case that did not pass
-   comes with the `vatio chat show CHAT_ID` of its replay. Iterate (fix, push,
-   test) until the reports pass and nothing that passes on live fails. A case
-   marked "not tested (Vatio's side)" says nothing about your fix: run
-   `vatio test --wait` again. One not tested because a tool needs a
-   signed-in visitor replays signed in with `vatio test --as-subject ID`. Name reports by id (`F-7K2QX`).
-5. Show the developer what passes now, and `vatio publish` once they agree:
-   it changes what visitors get. In a draft (no conversation from outside
-   the team yet) live already runs every push, and `vatio publish` says
-   there is nothing to publish. If it is refused, follow its message: it
-   says what to run. Never pass `--force` unless the developer explicitly
-   asks for it.
-6. If the digest, an error or the docs left you guessing, say so:
-   `vatio feedback "what you were doing and what was missing"`.
-7. Last, in Claude Code, offer to send this session to the Vatio team, as
-   the `vatio-share-session` skill says. It starts with
-   `vatio share-session --should-ask`: if that prints `no`, say nothing.
+   `update_agent` (instructions, tools, knowledge, links),
+   `write_knowledge_entry`, `set_tool`, or the app's backend a tool calls
+   (that code is in the app's repository). `get_tool_health` shows each tool's
+   error rate, timeouts and latency, and the calls that failed with what the
+   backend answered: a failing tool rarely gets reported, because the agent
+   apologizes and moves on. Fix those too. After the reports come the tests
+   that fail on preview and the ones the agent answers differently each time:
+   work those too, as their sections say. Never remove a test because it
+   fails. Something the developer asks the agent to do that no report covers
+   is a test first: `add_test` with `question` and `should` asks it on preview,
+   and `get_test` with the `chat_id` it answers with says whether it passes
+   now; then fix until it does.
+3. Each change lands on preview at once and runs no tests. `get_agent` reads
+   the agent whole before you change it.
+4. `run_tests` replays every report and test against preview on Vatio's
+   servers and returns the run ids; `get_test_results` with each id shows the
+   report so far. It takes a few minutes: ask again until it has finished. A
+   case that did not pass names the conversation of its replay
+   (`get_conversation`). Iterate (fix, `run_tests`) until the reports pass
+   and nothing that passes on live fails. A case marked "not tested (Vatio's
+   side)" says nothing about your fix: run the tests again. One not tested
+   because a tool needs a signed-in visitor replays signed in with
+   `run_tests` and a `visitor_token`
+   (https://vatio.ai/docs/authentication/tools.md#test-a-private-tool).
+   Name reports by id (`F-7K2QX`).
+5. Show the developer what passes now, and `publish` once they agree: it
+   changes what visitors get. In a draft (no conversation from outside the
+   team yet) live already runs every change, and `publish` says there is
+   nothing to publish. If it is refused, follow its message. Never pass
+   `force` unless the developer explicitly asks for it; `rollback` undoes a
+   publish.
+6. Last, tell the Vatio team how it went, with the MCP's `send_feedback`
+   (and the workspace's slug): which step of fixing the reports took the most
+   work, and why (a report that left you guessing, a test that would not
+   reproduce, a tool or an error that got in the way). A few sentences, with no
+   secrets or visitors' words, and tell the developer in one line that you
+   sent it.
 
-If the fix needs more than the digest says, `vatio docs search TERM` prints
-the sections of the docs that mention something, with their page,
-`vatio docs PAGE` one page (`tools`, `knowledge`), and `vatio docs` the whole
-contract (manifest, tools, knowledge, CLI). There are two ways to run the CLI,
-and the package name appears once in either: `vatio ARGS` when it is
-installed globally, and `npx @vatio-ai/cli@latest ARGS` when it is not. Pick
-one per command and leave it whole — `npx @vatio-ai/cli @vatio-ai/cli flags`
-is the commonest way to get this wrong, and the CLI reads the second name as
-the command and fails. If it says to log in, run `vatio login`: it
-opens the browser on the developer's machine (if it doesn't, give them the
-link it prints), and they sign in and check the code matches. If it times
-out, run it again after they have signed in.
+The reports hold real visitors' conversations. Keep them out of commits,
+issues and logs: refer to a report by its id and describe the cause, never
+quote what the visitor or the backend said.
 
-A command you hand the developer to run themselves, because a permission
-check refused it or it needs their own credentials, says
-`npx @vatio-ai/cli@latest`, never `vatio`: the `vatio` installed on their
-machine can be too old for Vatio to accept. When one command's output feeds
-another (a key into a secrets store), take it with `--json` and chain with
-`&&`, never through `grep`, so a failure stops there instead of passing on an
-empty value. If Claude Code's auto mode refused a `vatio` command and the
-project's `.claude/settings.json` has no `Bash(vatio *)` rule, also mention
-**Auto mode** on the docs' Claude Code page.
+When a fix needs more than the reports say,
+`npx @vatio-ai/cli@latest docs search TERM` prints the sections of the docs
+that mention it, with their page, and `npx @vatio-ai/cli@latest docs PAGE`
+one page (`tools`, `knowledge`); neither needs a workspace or a sign-in.
+https://vatio.ai/docs/llms.txt indexes every page as markdown.

@@ -11,8 +11,8 @@
     {
       "name": "vatio",
       "source": "./",
-      "description": "Vatio skills for Claude Code, Cursor and Codex: add an AI agent to the app you're building with /vatio-init, then improve it daily with /vatio-improve and learn what people ask it with /vatio-analyze.",
-      "version": "1.25.1",
+      "description": "Vatio skills and MCP for Claude Code, Cursor and Codex: build and test an AI agent for the app you're building with /vatio-init, improve it daily with /vatio-improve and learn what people ask it with /vatio-analyze. Vatio holds the agent; no config files in your repo.",
+      "version": "2.0.0",
       "homepage": "https://vatio.ai/docs/integrations/claude-code",
       "category": "development",
       "keywords": [

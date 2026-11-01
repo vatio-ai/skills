@@ -1,144 +1,166 @@
 ---
 name: vatio-init
-description: The first Vatio skill in a project. Looks at what is already there — a vatio.yml anywhere in the repository, the workspace on the platform, the app's own code — and recommends from it, then either builds a customer-facing AI agent (in the app first, through its web widget or mobile SDK, and on WhatsApp or Instagram when asked) and gets it to Try the agent in the Vatio inbox, or gets a developer who joined a project that already has one up to speed. Use when asked to create, set up, start or ship a Vatio agent, a chatbot or a support/sales assistant on Vatio, to get started on or onboard onto a project that uses Vatio, or when the user pastes the prompt from vatio.ai.
+description: The first Vatio skill in a project. Looks at what is already there — the workspaces the Vatio MCP reaches, the app's own code — and recommends from it, then either builds a customer-facing AI agent through the Vatio MCP (in the app first, through its web widget or mobile SDK, and on WhatsApp or Instagram when asked), writes its tests and gets it to Try the agent in the Vatio inbox, or gets a developer who joined a project that already has one up to speed. Use when asked to create, set up, start or ship a Vatio agent, a chatbot or a support/sales assistant on Vatio, to get started on or onboard onto a project that uses Vatio, or when the user pastes the prompt from vatio.ai.
 ---
 
 # Start with Vatio in this project
 
-Look before you create: the project may already have an agent. Vatio keeps
-the contract and the procedures on the platform, so they are never out of
-date here. Read them first:
+Vatio holds the agent: its instructions, knowledge, tools, secrets and tests
+live on the platform, and you build and test it with the Vatio MCP's tools.
+Nothing about the agent goes into the app's repository. What does is what
+puts it in front of people (the widget or SDK) and any endpoint of the app
+the agent calls.
 
-```bash
-npx @vatio-ai/cli docs
-```
+## 0. The Vatio MCP
 
-Under **For coding agents**, **Starting a new agent** and **Joining an
-existing workspace** are the two procedures. Follow the one that fits; it
-takes precedence over the summary below. The rest of that output is the
-contract for `vatio.yml`, tools, knowledge and the CLI. To look something up
-again later, `npx @vatio-ai/cli docs search TERM` prints the sections that
-mention it, with their page, and `npx @vatio-ai/cli docs PAGE` one page
-(`tools`, `knowledge`, `cli/deploy`), rather than reading it all twice.
+Its tools are `list_workspaces`, `update_agent`, `chat_with_agent`,
+`add_test` and the rest. If you do not have them:
+
+- **Claude Code:** `npx @vatio-ai/skills` added the server to this project's
+  `.mcp.json`. If it is not there, `claude mcp add --transport http vatio
+  https://vatio.ai/mcp`. Then the person runs `/mcp`, picks **vatio** and
+  signs in (email, Google or GitHub): only they can. A server added during a
+  session loads when Claude Code starts again, so say so and stop until its
+  tools are there.
+- **Cursor, Codex and the rest:** add an MCP server at `https://vatio.ai/mcp`
+  (Streamable HTTP, OAuth), as https://vatio.ai/docs/mcp.md says.
+
+Never work around a missing MCP by writing a `vatio.yml` or running
+`vatio push`.
 
 ## 1. Look at what is there
 
-- **An agent.** Every `vatio.yml`, at or above the current directory and
-  anywhere in the repository (`git ls-files '*vatio.yml'`). Its
-  `workspace:` line names the workspace.
-- **The app.** What the project does and for whom; the API an agent could
-  call (routes, controllers, an OpenAPI file); how its users sign in; and the
-  docs, FAQs or policies an agent could read as knowledge.
-- **This machine.** `vatio doctor`: whether it is signed in, and which
-  workspace this directory resolves to.
+- **The account.** `list_workspaces`: every workspace the person reaches and
+  their role in it.
+- **The app.** What it does and for whom; the API an agent could call
+  (routes, controllers, an OpenAPI file); how its users sign in; the docs,
+  FAQs or policies an agent could read as knowledge; and whether Vatio is
+  already in it (`cdn.vatio.ai`, `@vatio-ai/widget`, `data-workspace`, an
+  SDK's setup), which names its workspace.
+- **A `vatio.yml`** anywhere in the repository (`git ls-files
+  '*vatio.yml'`) means a team kept the agent as files. The agent is still
+  the one on Vatio, under its `workspace:` slug.
 
 ## 2. Say what you found, and recommend
 
-Before changing anything, tell the user in a few lines what is there and what
-you recommend, and ask them to confirm.
+Before changing anything, tell the person in a few lines what is there and
+what you recommend, and ask them to confirm.
 
-- **No `vatio.yml`: a new agent.** Propose what it could do from what you
-  read: what it answers, which endpoints become tools, what becomes
-  knowledge. Then follow **Starting a new agent**, in short:
-  1. Ask the owner only what the code does not answer: what the business
-     does, what the agent must never say, when it hands off to a person,
-     which of their systems it should read from. Do not invent business
-     facts.
-  2. `vatio init SLUG` in the repository the agent belongs in, then write
-     `vatio.yml` (and `tools/` for their APIs, with one that alerts their
-     team when a person should take over: **Human in the loop** in the docs).
-  3. `vatio diff`, `vatio push`, then try it with `vatio chat`, including a
-     conversation that should hand off. A tool that needs the visitor's
-     phone or a team role runs with `vatio chat --as-phone me` (or a
-     customer phone); an `access: private` one with `--as-subject ID`. When visitors
-     will send files (a PDF, a photo), send one with `vatio chat --file PATH
-     "question"`: it says how much of a PDF the agent got.
-  4. **Write down what it should do as tests.** For each question that
-     matters, `vatio test add "what a visitor would ask" "what the answer has
-     to do"`: it asks it on preview and says whether it passes now (add
-     `--as-phone` or `--as-subject` as in `vatio chat`). Three or four is
-     enough to start. This is
-     the only thing that makes a later version's mistake visible: `vatio
-     test` replays them on every push, and once the workspace is published
-     `vatio publish` refuses a version that breaks one. A workspace with no
-     tests publishes with nothing checked, which is how a fix for one
-     question quietly breaks another.
-  5. Give them the link `vatio push` prints after `Try it:` (the inbox
-     with Try the agent open: web chat, WhatsApp and Instagram) with what you
-     tried. Until someone outside their team talks to the agent the
-     workspace is a draft: `vatio push` is the deploy, so there is nothing to
-     publish yet and you need not explain preview and live. Every push says
-     which of the two states the workspace is in; once it says visitors still
-     get an older version, publish with `vatio publish` only when they ask.
-- **A `vatio.yml`: the agent exists.** Never `vatio init` here: it writes a
-  starter agent, and pushing that replaces the real one. Work from the
-  directory of the `vatio.yml` and follow **Joining an existing workspace**:
-  sign in with the address they were invited with, then
-  `vatio diff --env live` and `vatio status`. Explain the agent from
-  `vatio.yml` (what it is for, its tools, its knowledge, when it hands off)
-  and recommend from what you see:
-  - the folder differs from live: say so first, the repository may be behind;
-  - `vatio status` lists changes made outside the files (from the Vatio MCP
-    in Claude or ChatGPT): `vatio pull` writes them into `vatio.yml` and
-    `tools/` before anything is pushed;
-  - open reports in `vatio test list`: work them with the `vatio-improve` skill;
-  - tool calls failing in `vatio tools`: the fix is in the backend they call;
-  - `workspace_forbidden`: they are not in the workspace yet, and the owner
-    invites them from **Team** in the inbox.
-- **A workspace slug but no `vatio.yml`.** Ask for the repository it lives
-  in. If it was built from the Vatio MCP in Claude or ChatGPT, it has none
-  yet: `vatio init SLUG` in the repository it should live in, then, before
-  any push, `vatio pull --force` to replace the starter agent with the one
-  Vatio runs. Otherwise do not `vatio init` one instead.
+### No workspace for this app: a new agent
+
+Propose what it could do from what you read: what it answers, which
+endpoints become tools, what becomes knowledge. Then:
+
+1. **Ask the owner only what the code does not answer:** what the business
+   does and who writes in, what the agent must never say or promise, when it
+   hands the conversation to a person, which of their systems it should read
+   from. Do not invent business facts.
+2. **Create it.** `create_workspace` (a slug from the app's name), then
+   `update_agent`: `instructions` from the answers, with the never-say rules
+   as explicit rules, a `name` and a `personality`. Anything long the agent
+   should read rather than memorize is knowledge: `create_knowledge_base`,
+   one `write_knowledge_entry` per topic, and the base in the agent's
+   `knowledge` (`update_agent`).
+3. **Connect the app's backend.** `set_secret` for its URL and credential,
+   taking the values from the app's `.env` (never repeat one back or write
+   it into a file); `set_backend` with `base_url` and `headers` that read them
+   as `$env.KEY`; then one `set_tool` per endpoint, after reading
+   https://vatio.ai/docs/tools.md. Give it a tool that alerts the team when a
+   person should take over (https://vatio.ai/docs/handoff.md). An endpoint the
+   app does not have yet is yours to write in the app. A tool that writes (an
+   order, a booking) needs a test value (`set_secret` with `tests: true`, a
+   staging API) so tests never write to production.
+4. **Try it** with `chat_with_agent`: a few representative conversations,
+   including one that should hand off and one that asks for something it must
+   not say. Read the tools each reply called and what the backend answered;
+   `get_conversation` shows a whole turn. A tool that needs the visitor's
+   phone or a team role runs with `as_phone: "me"` (or a customer phone); an
+   `access: private` one with `visitor_token`, a JWT for a test user signed
+   with the private key from step 6
+   (https://vatio.ai/docs/authentication/tools.md#test-a-private-tool).
+   When visitors will send files (a PDF, a photo, a voice note), send one
+   too: run the curl command `prepare_file` returns, then pass the id it
+   answers in `chat_with_agent`'s `files`.
+5. **Write down what it should do as tests.** For each question that
+   matters, `add_test` with `question` (what a visitor would ask) and
+   `should` (what the answer has to do). It asks it on preview and answers
+   at once with a `chat_id` and how many seconds to wait: add the other tests
+   meanwhile, then `get_test` with each `chat_id` shows the test and whether
+   it passes now (while it is still being made, it says when to ask again).
+   A reply you already have becomes one with `chat_id` or `message_id`. Three or four is enough to start, including the
+   hand-off and something it must not say. This is the only thing that makes
+   a later version's mistake visible: `run_tests` replays them all, and once
+   the workspace is published `publish` refuses a version that breaks one. A
+   workspace with no tests publishes with nothing checked, which is how a fix
+   for one question quietly breaks another. Fix and `add_test` again until
+   they pass; `run_tests` then `get_test_results` checks them all together.
+6. **Put it in the app.** `get_status` returns `put_in_the_app`: the
+   publishable key and the widget's script tag, which work from any site
+   (local and production alike), and `preview_key` to try preview locally.
+   Add the widget (the tag, or `@vatio-ai/widget`) or the iOS, Android or
+   Flutter SDK where the app's users are, in the app's style:
+   https://vatio.ai/docs/channels/widget.md, https://vatio.ai/docs/sdk/ios.md,
+   https://vatio.ai/docs/sdk/android.md, https://vatio.ai/docs/sdk/flutter.md.
+   When the agent must know who is signed in (their orders, their account),
+   the app's backend signs a JWT: make a keypair (`openssl genpkey -algorithm
+   RSA -pkeyopt rsa_keygen_bits:2048 -out vatio-private.pem`, then `openssl
+   pkey -in vatio-private.pem -pubout`), keep the private key in the backend's
+   secrets (never in the frontend, never committed), `set_auth` with the
+   public key, and follow https://vatio.ai/docs/authentication.md.
+7. **Hand over.** `get_status` gives `try_preview`: the inbox with Try the
+   agent open (web chat, WhatsApp and Instagram). Give it with what you tried
+   and the tests. Until someone outside the team talks to the agent the
+   workspace is a draft: every change reaches the app at once and there is
+   nothing to publish, so you need not explain preview and live. Once
+   `get_status` says it is no longer a draft, changes wait in preview:
+   `publish` only when they ask.
+
+### A workspace already exists
+
+The app names one, `list_workspaces` shows it, or a `vatio.yml` does. Never
+create another. `get_agent` and `get_status`, then explain the agent from them
+(what it is for, its tools, its knowledge, when it hands off) and recommend
+from what you see:
+
+- open reports in `list_reports`: work them with the `vatio-improve` skill;
+- tools failing in `get_tool_health`: the fix is in the backend they call;
+- few or no tests (`list_reports` lists them last): offer to `add_test` what
+  matters most;
+- the workspace is not in `list_workspaces`: the owner invites them from
+  **Team** in the inbox, with the email they signed in with.
+
+If there is a `vatio.yml`, the agent on Vatio is the one that counts and you
+change it through the MCP from now on. Recommend removing `vatio.yml`,
+`tools/` and `identity.pub` from the repository, so nobody pushes an old copy
+over it, and do it only with their yes.
 
 ## Claude Code permissions
 
-In Claude Code, once the agent is pushed, check the project's
+In Claude Code, once the agent works, check the project's
 `.claude/settings.json` (in the folder Claude Code was opened in). If it has
-no `Bash(vatio *)` rule, offer once to add the block in **Auto mode** on the
-docs' Claude Code page: it lets you run `vatio` without the auto mode
-classifier refusing it, and still asks the developer before `vatio publish`,
-`vatio rollback`, `vatio secrets` and `vatio keys`. Add it only with their
-yes, merged into what the file has, never replacing it, and add no other rule.
-It matches `vatio`, so it needs the CLI installed:
-`npm install -g @vatio-ai/cli`, also only with their yes. Run each `vatio`
-command on its own, not in a pipe or after `cd … &&`, so the rule matches.
-Never edit `~/.claude/settings.json`; for `vatio share-session` point them to
-that same section.
+no `mcp__vatio` rule, offer once to add the block in **Auto mode** on
+https://vatio.ai/docs/integrations/claude-code.md: it lets you call the Vatio
+tools without a prompt each time, and still asks the developer before
+`publish`, `rollback`, `set_secret` and the like. Add it only with their yes,
+merged into what the file has, never replacing it, and add no other rule.
+Never edit `~/.claude/settings.json`.
 
 ## 3. Before you finish
 
-1. If an error or the docs left you guessing, say so:
-   `vatio feedback "what you were doing and what was missing"`.
-2. Last, in Claude Code, offer to send this session to the Vatio team, as
-   the `vatio-share-session` skill says. It starts with
-   `vatio share-session --should-ask`: if that prints `no`, say nothing.
+Tell the Vatio team how building it went, with the MCP's `send_feedback`
+(and the workspace's slug). Ask yourself which step of setting up the agent
+took the most work, and why: a tool that refused something, an error that left
+you guessing, docs that were missing, a step you had to work around. Answer
+from what happened in this session, in a few sentences, with no secrets, keys
+or anyone's personal data. Do it every time, even when it all went smoothly
+(then say which step took longest), and tell the developer in one line that
+you sent it.
 
-There are two ways to run the CLI, and the package name appears once in
-either: `vatio ARGS` when it is installed globally, and
-`npx @vatio-ai/cli@latest ARGS` when it is not. Pick one per command and
-leave it whole — `npx @vatio-ai/cli @vatio-ai/cli push` is the commonest way
-to get this wrong, and the CLI reads the second name as the command and
-fails. The first
-`vatio push` (or `vatio login`) signs the developer in: it opens the browser
-on their machine (if it doesn't, give them the link it prints). Tell them to
-sign in with email, Google or GitHub and check that the code on the page
-matches the one the terminal printed. If the command times out waiting, run
-it again after they have signed in: it picks up the same sign-in page.
+To look something up in the docs, `npx @vatio-ai/cli@latest docs search
+TERM` prints the sections that mention it, with their page, and
+`npx @vatio-ai/cli@latest docs PAGE` one page (`tools`, `knowledge`); neither
+needs a workspace or a sign-in.
 
-A command you hand the developer to run themselves, because a permission
-check refused it or it needs their own credentials, says
-`npx @vatio-ai/cli@latest`, never `vatio`: the `vatio` installed on their
-machine can be too old for Vatio to accept. When one command's output feeds
-another (a key into a secrets store), take it with `--json` and chain with
-`&&`, never through `grep`, so a failure stops there instead of passing on an
-empty value. If Claude Code's auto mode refused a `vatio` command and the
-project's `.claude/settings.json` has no `Bash(vatio *)` rule, also mention
-**Auto mode** on the docs' Claude Code page.
-
-A **secret** is not one of those commands, as long as you do not read it.
-`vatio secrets set KEY --from-env` takes the value from their shell or the
-`.env` beside the `vatio.yml` and sends it without printing it, so run that
-yourself rather than stopping to ask. Ask them only for a value that is not
-there yet, and never echo one back, put one in a file you write, or read a
-`.env` to quote it.
+A tool that refuses says what to do next: follow it. `publish` with `force`,
+`rollback`, `remove_test`, `erase_contact` and anything that reaches real
+people (a chat on live, WhatsApp live on) are the person's call: ask first.

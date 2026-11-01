@@ -3,7 +3,11 @@
 // runs in, for every coding agent at once:
 //   .agents/skills/   Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode, Cline, Amp
 //   .claude/skills/   Claude Code, which does not read .agents/
-// Running it again overwrites the copies with this version's.
+// and connects the Vatio MCP the skills build and test the agent with:
+//   .mcp.json         Claude Code, which asks before using a project's server
+//   .cursor/mcp.json  Cursor, when the project has a .cursor/
+// Running it again overwrites the copies with this version's; an MCP entry
+// already there is left as it is.
 import { spawnSync } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
@@ -11,19 +15,24 @@ import { homedir, platform } from "node:os";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const usage = `usage: npx @vatio-ai/skills [--dir PATH]
+const usage = `usage: npx @vatio-ai/skills [--dir PATH] [--no-mcp]
 
 Copies the Vatio skills (vatio-init, vatio-improve, vatio-analyze,
-vatio-share-session) into PATH/.agents/skills and
-PATH/.claude/skills. PATH defaults to the current directory.`;
+vatio-share-session) into PATH/.agents/skills and PATH/.claude/skills,
+and adds the Vatio MCP (https://vatio.ai/mcp) to PATH/.mcp.json and,
+when there is a PATH/.cursor, PATH/.cursor/mcp.json. --no-mcp leaves
+those alone. PATH defaults to the current directory.`;
 
 const args = process.argv.slice(2);
 let root = process.cwd();
+let mcp = true;
 for (let i = 0; i < args.length; i++) {
   const arg = args[i];
   if (arg === "-h" || arg === "--help") {
     console.log(usage);
     process.exit(0);
+  } else if (arg === "--no-mcp") {
+    mcp = false;
   } else if (arg === "--dir" && args[i + 1]) {
     root = args[++i];
   } else {
@@ -72,8 +81,41 @@ function installedByUs(dir, name) {
   }
 }
 
+const base = String(process.env.VATIO_BASE_URL ?? "").trim().replace(/\/+$/, "") || "https://vatio.ai";
+const mcpUrl = `${base}/mcp`;
+if (mcp) {
+  addServer(join(root, ".mcp.json"), { type: "http", url: mcpUrl });
+  if (existsSync(join(root, ".cursor"))) addServer(join(root, ".cursor", "mcp.json"), { url: mcpUrl });
+}
+
+// Adds `vatio` to an MCP config's servers, keeping everything else in it. A
+// file that is not JSON is the developer's to fix, not ours to replace.
+function addServer(file, server) {
+  const shown = relative(process.cwd(), file) || file;
+  let config = {};
+  if (existsSync(file)) {
+    try {
+      config = JSON.parse(readFileSync(file, "utf8"));
+    } catch {
+      console.log(`  ${shown} is not valid JSON: left alone. Add the Vatio MCP (${mcpUrl}) to it yourself.`);
+      return;
+    }
+  }
+  config.mcpServers ??= {};
+  if (config.mcpServers.vatio) {
+    console.log(`  ${shown} already has the Vatio MCP`);
+    return;
+  }
+  config.mcpServers.vatio = server;
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, `${JSON.stringify(config, null, 2)}\n`);
+  console.log(`  ${shown}: the Vatio MCP (${mcpUrl})`);
+}
+
 console.log(`
-Ask your coding agent to build or improve a Vatio agent and it will use them.
+Then, in Claude Code, approve the vatio server it asks about (or run /mcp) and
+sign in to Vatio; in another coding agent, connect ${mcpUrl}. Ask it to build or
+improve a Vatio agent, or run /vatio-init, and it will use them.
 Docs: https://vatio.ai/docs/integrations/claude-code`);
 
 await reportInstall();
@@ -88,7 +130,6 @@ async function reportInstall() {
   if (off) return;
 
   console.log("Letting Vatio know these skills were installed (their version and the coding agent, nothing else).\nVATIO_TELEMETRY=0 skips it.");
-  const base = String(process.env.VATIO_BASE_URL ?? "").trim().replace(/\/+$/, "") || "https://vatio.ai";
   try {
     await fetch(`${base}/api/developer/v1/cli/events`, {
       method: "POST",
