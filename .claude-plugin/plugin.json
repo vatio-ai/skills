@@ -1,7 +1,7 @@
 {
   "name": "vatio",
   "description": "Vatio skills and MCP for Claude Code, Cursor and Codex: build and test an AI agent for the app you're building with /vatio-init, improve it daily with /vatio-improve and learn what people ask it with /vatio-analyze. Vatio holds the agent; no config files in your repo.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": {
     "name": "Vatio",
     "url": "https://vatio.ai"

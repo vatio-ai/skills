@@ -69,7 +69,8 @@ endpoints become tools, what becomes knowledge. Then:
    person should take over (https://vatio.ai/docs/handoff.md). An endpoint the
    app does not have yet is yours to write in the app. A tool that writes (an
    order, a booking) needs a test value (`set_secret` with `tests: true`, a
-   staging API) so tests never write to production.
+   staging API), which your team's conversations and every test use, so they
+   never write to production.
 4. **Try it** with `chat_with_agent`: a few representative conversations,
    including one that should hand off and one that asks for something it must
    not say. Read the tools each reply called and what the backend answered;
@@ -83,20 +84,22 @@ endpoints become tools, what becomes knowledge. Then:
    answers in `chat_with_agent`'s `files`.
 5. **Write down what it should do as tests.** For each question that
    matters, `add_test` with `question` (what a visitor would ask) and
-   `should` (what the answer has to do). It asks it on preview and answers
-   at once with a `chat_id` and how many seconds to wait: add the other tests
-   meanwhile, then `get_test` with each `chat_id` shows the test and whether
-   it passes now (while it is still being made, it says when to ask again).
-   A reply you already have becomes one with `chat_id` or `message_id`. Three or four is enough to start, including the
-   hand-off and something it must not say. This is the only thing that makes
-   a later version's mistake visible: `run_tests` replays them all, and once
-   the workspace is published `publish` refuses a version that breaks one. A
-   workspace with no tests publishes with nothing checked, which is how a fix
-   for one question quietly breaks another. Fix and `add_test` again until
-   they pass; `run_tests` then `get_test_results` checks them all together.
+   `should` (what the answer has to do). It asks it in a new conversation and
+   answers at once with a `chat_id` and how many seconds to wait: add the
+   other tests meanwhile, then `get_test` with each `chat_id` shows the test
+   and whether it passes now (while it is still being made, it says when to
+   ask again). A reply you already have becomes one with `chat_id` or
+   `message_id`. Three or four is enough to start, including the hand-off and
+   something it must not say. This is the only thing that makes a later
+   change's mistake visible: Vatio replays the tests that pass today on every
+   change, and one that breaks a test reaches your team but not everyone
+   else. A workspace with no tests gets every change at once with nothing
+   checked, which is how a fix for one question quietly breaks another. Fix
+   and `add_test` again until they pass; `run_tests` then `get_test_results`
+   checks them all together.
 6. **Put it in the app.** `get_status` returns `put_in_the_app`: the
-   publishable key and the widget's script tag, which work from any site
-   (local and production alike), and `preview_key` to try preview locally.
+   publishable key and the widget's script tag. It is one key for
+   development and production alike, and works from any site or app.
    Add the widget (the tag, or `@vatio-ai/widget`) or the iOS, Android or
    Flutter SDK where the app's users are, in the app's style:
    https://vatio.ai/docs/channels/widget.md, https://vatio.ai/docs/sdk/ios.md,
@@ -107,13 +110,12 @@ endpoints become tools, what becomes knowledge. Then:
    pkey -in vatio-private.pem -pubout`), keep the private key in the backend's
    secrets (never in the frontend, never committed), `set_auth` with the
    public key, and follow https://vatio.ai/docs/authentication.md.
-7. **Hand over.** `get_status` gives `try_preview`: the inbox with Try the
-   agent open (web chat, WhatsApp and Instagram). Give it with what you tried
-   and the tests. Until someone outside the team talks to the agent the
-   workspace is a draft: every change reaches the app at once and there is
-   nothing to publish, so you need not explain preview and live. Once
-   `get_status` says it is no longer a draft, changes wait in preview:
-   `publish` only when they ask.
+7. **Hand over.** `get_status` gives `try_it`: the inbox with Try the agent
+   open (web chat, WhatsApp and Instagram). Give it with what you tried and
+   the tests. There is nothing to publish: every change reaches the app on
+   its own, as **How a change reaches people** below says. Until people talk
+   to the agent you need not ask before each change; once they do, ask
+   first.
 
 ### A workspace already exists
 
@@ -123,6 +125,9 @@ create another. `get_agent` and `get_status`, then explain the agent from them
 from what you see:
 
 - open reports in `list_reports`: work them with the `vatio-improve` skill;
+- a change held back from everyone (`shipping.state` is `held` in
+  `get_status`): `shipping.held.tests` says which test it breaks, and **How a
+  change reaches people** below what moves it on;
 - tools failing in `get_tool_health`: the fix is in the backend they call;
 - few or no tests (`list_reports` lists them last): offer to `add_test` what
   matters most;
@@ -134,6 +139,36 @@ change it through the MCP from now on. Recommend removing `vatio.yml`,
 `tools/` and `identity.pub` from the repository, so nobody pushes an old copy
 over it, and do it only with their yes.
 
+## How a change reaches people
+
+The agent is one, and there is nothing to publish. Every change
+(`update_agent`, `set_tool`, `set_backend`, `set_auth`, the knowledge tools)
+reaches your team at once (`chat_with_agent`, Try the agent in the inbox,
+Vatio's shared WhatsApp number and Instagram account) and everyone a few
+minutes later, once the tests that pass today pass on it. With no tests,
+everyone gets it at once.
+
+1. **Ask first when people already talk to the agent** (`impact` in
+   `get_status` counts its replies to them, or the person says so): say what
+   you will change and change it only with their yes. On a new agent nobody
+   talks to yet, there is no need to ask for each change.
+2. **Make the change, then try it** with `chat_with_agent`, which talks to
+   the newest version, and `add_test` what it must keep doing.
+3. **`get_status` says where it stands**, in `shipping.state`: `live` when
+   everyone has it, `testing` while Vatio replays the tests on it
+   (`testing.expected_by` says until about when), and `held` when a test that
+   passes today fails on it in every attempt. Held, your team keeps it,
+   everyone else keeps the version before, and whoever made the change gets
+   an email. `shipping.held.tests` names each test, with the `chat_id` of its
+   replay for `get_conversation` (with none, `shipping.held.reason` and
+   `message` say why). Another change that fixes it moves it on, as does
+   `remove_test` for a test the change made obsolete (their call) or a
+   `run_tests` run that passes. There is no way to force it.
+4. **`rollback` undoes the last change** for everyone, your team included.
+
+A note someone on the team left on one of their own conversations is for
+whoever changes the agent next, and the next change closes it.
+
 ## Claude Code permissions
 
 In Claude Code, once the agent works, check the project's
@@ -141,7 +176,7 @@ In Claude Code, once the agent works, check the project's
 no `mcp__vatio` rule, offer once to add the block in **Auto mode** on
 https://vatio.ai/docs/integrations/claude-code.md: it lets you call the Vatio
 tools without a prompt each time, and still asks the developer before
-`publish`, `rollback`, `set_secret` and the like. Add it only with their yes,
+`rollback`, `set_secret` and the like. Add it only with their yes,
 merged into what the file has, never replacing it, and add no other rule.
 Never edit `~/.claude/settings.json`.
 
@@ -161,6 +196,6 @@ TERM` prints the sections that mention it, with their page, and
 `npx @vatio-ai/cli@latest docs PAGE` one page (`tools`, `knowledge`); neither
 needs a workspace or a sign-in.
 
-A tool that refuses says what to do next: follow it. `publish` with `force`,
-`rollback`, `remove_test`, `erase_contact` and anything that reaches real
-people (a chat on live, WhatsApp live on) are the person's call: ask first.
+A tool that refuses says what to do next: follow it. A change to an agent
+people already talk to, `rollback`, `remove_test`, `erase_contact` and
+turning WhatsApp live on are the person's call: ask first.

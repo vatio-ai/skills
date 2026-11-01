@@ -11,20 +11,20 @@ Then, in Claude Code, approve the **vatio** MCP server it asks about, sign in
 to Vatio, and run `/vatio-init` (in Cursor or Codex, ask it to use
 vatio-init). It builds the agent from your project, writes its tests and puts
 it in your app; [Vatio](https://vatio.ai) holds and runs it, with an inbox,
-human handoff and the tests checked before every publish. There are no config
-files to keep in your repository: the agent lives on Vatio and your coding
-agent changes it through the Vatio MCP.
+human handoff and the tests checked before every change reaches your users.
+There are no config files to keep in your repository: the agent lives on
+Vatio and your coding agent changes it through the Vatio MCP.
 
 After launch, report mistakes in the inbox and make `/vatio-improve` your
-daily routine. Your coding agent fixes the agent, Vatio replays the reported
-cases and your tests, and you approve the update. You do not need to write
-code yourself; you need your app’s project on your computer and Node.js 20 or
-newer.
+daily routine. You approve each fix, your coding agent makes it, and Vatio
+replays the reported cases and your tests: the fix reaches your users once
+nothing that worked breaks. You do not need to write code yourself; you need
+your app’s project on your computer and Node.js 20 or newer.
 
 | Skill | What it does |
 |---|---|
 | `vatio-init` | The first one in a project: looks at what is already there (the workspaces your account reaches, the app's code) and recommends from it. With no agent yet, builds one through the MCP: asks the owner what the code does not answer, writes its instructions, knowledge and tools, tries it, writes its tests, puts the widget or SDK in your app and hands over a link to try. With one, gets a developer who joined the project up to speed |
-| `vatio-improve` | Takes every reply your supervisors reported in the inbox in one session: reads `list_reports`, fixes each cause, proves it with `run_tests` (on Vatio's servers) and publishes after your approval |
+| `vatio-improve` | Takes every reply your supervisors reported in the inbox in one session: reads `list_reports`, fixes each cause after your approval and proves it with `run_tests` (on Vatio's servers); the fix reaches your users once the tests that pass today pass on it |
 | `vatio-analyze` | Reads what people talked about with the agent between two dates, from `list_conversations` (redacted by Vatio before it leaves): topics with their counts, the questions it could not answer and the words people use, in a report for writing content, FAQs or knowledge. Anyone on the workspace's team can run it, viewers included |
 | `vatio-share-session` | Sends the coding session to the Vatio team when you ask it to, after showing you what goes (images left out, anything that looks like a secret redacted), with your feedback if you want to add some |
 
