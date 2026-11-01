@@ -34,10 +34,9 @@ In short:
    `remove_test` removes a report and its test for everyone. It is the
    developer's call: propose it (a report Vatio caused, one that asks for
    something the agent must not do, one whose fix is in but the tests cannot
-   reproduce) and run it only when they say so. A note someone on the team
-   left on one of their own conversations has no test: fix it from its
-   conversation and try it again with `chat_with_agent`; the next change
-   closes it.
+   reproduce) and run it only when they say so. A report on one of the
+   team's own conversations (its Conversation row says `your team's`) is a
+   test like any other: work it the same way.
 2. Group the reports by cause, and fix each cause where it lives:
    `update_agent` (instructions, tools, knowledge, links),
    `write_knowledge_entry`, `set_tool`, or the app's backend a tool calls

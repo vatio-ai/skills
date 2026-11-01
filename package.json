@@ -1,6 +1,6 @@
 {
   "name": "@vatio-ai/skills",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Vatio skills and MCP for Claude Code, Cursor and Codex: build and test an AI agent for the app you're building with /vatio-init, improve it daily with /vatio-improve and learn what people ask it with /vatio-analyze. Vatio holds the agent; no config files in your repo.",
   "keywords": [
     "vatio",

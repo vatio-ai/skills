@@ -166,8 +166,9 @@ everyone gets it at once.
    `run_tests` run that passes. There is no way to force it.
 4. **`rollback` undoes the last change** for everyone, your team included.
 
-A note someone on the team left on one of their own conversations is for
-whoever changes the agent next, and the next change closes it.
+A reply someone on the team reports on one of their own conversations (in
+Try the agent, say) is a test like any other, resolved once the version
+everyone has passes it.
 
 ## Claude Code permissions
 
