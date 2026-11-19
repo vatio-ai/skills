@@ -148,8 +148,8 @@ Vatio's shared WhatsApp number and Instagram account) and everyone a few
 minutes later, once the tests that pass today pass on it. With no tests,
 everyone gets it at once.
 
-1. **Ask first when people already talk to the agent** (`impact` in
-   `get_status` counts its replies to them, or the person says so): say what
+1. **Ask first when people already talk to the agent** (`get_analytics`
+   with `query: summary` counts their conversations, or the person says so): say what
    you will change and change it only with their yes. On a new agent nobody
    talks to yet, there is no need to ask for each change.
 2. **Make the change, then try it** with `chat_with_agent`, which talks to
