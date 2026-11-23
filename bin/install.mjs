@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// npx @vatio-ai/skills -- copies the Vatio skills into the project the command
+// npx @vatio-ai/skills -- copies the Vatio skill into the project the command
 // runs in, for every coding agent at once:
 //   .agents/skills/   Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode, Cline, Amp
 //   .claude/skills/   Claude Code, which does not read .agents/
@@ -17,8 +17,8 @@ import { fileURLToPath } from "node:url";
 
 const usage = `usage: npx @vatio-ai/skills [--dir PATH] [--no-mcp]
 
-Copies the Vatio skills (vatio-init, vatio-improve, vatio-analyze,
-vatio-share-session) into PATH/.agents/skills and PATH/.claude/skills,
+Copies the Vatio skill (vatio) into PATH/.agents/skills and
+PATH/.claude/skills,
 and adds the Vatio MCP (https://vatio.ai/mcp) to PATH/.mcp.json and,
 when there is a PATH/.cursor, PATH/.cursor/mcp.json. --no-mcp leaves
 those alone. PATH defaults to the current directory.`;
@@ -47,13 +47,19 @@ if (!existsSync(root)) {
 }
 
 const source = join(dirname(fileURLToPath(import.meta.url)), "..", "skills");
-// Left next to each copy, so `vatio test list` can tell a project whose copies are
-// older than the published skills (cli/lib/skills-hint.mjs).
+// Left next to each copy, so a project's copy can be told from the published one.
 const VERSION_FILE = ".vatio-skills-version";
 const { version } = JSON.parse(readFileSync(join(source, "..", "package.json"), "utf8"));
 // Skills this package used to ship, and what replaced them (null: nothing).
 // Left in place, an old copy would keep answering requests.
-const RETIRED = { "vatio-new": "vatio-init", "vatio-add-to-app": null };
+const RETIRED = {
+  "vatio-new": "vatio",
+  "vatio-add-to-app": "vatio",
+  "vatio-init": "vatio",
+  "vatio-improve": "vatio",
+  "vatio-analyze": "vatio",
+  "vatio-share-session": null,
+};
 const skills = readdirSync(source, { withFileTypes: true })
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name);
@@ -114,9 +120,9 @@ function addServer(file, server) {
 
 console.log(`
 Then, in Claude Code, approve the vatio server it asks about (or run /mcp) and
-sign in to Vatio; in another coding agent, connect ${mcpUrl}. Ask it to build or
-improve a Vatio agent, or run /vatio-init, and it will use them.
-Docs: https://vatio.ai/docs/integrations/claude-code`);
+sign in to Vatio; in another coding agent, connect ${mcpUrl}. Ask it to build,
+change or improve a Vatio agent, or run /vatio, and it will use the skill.
+Docs: https://vatio.ai/docs/mcp`);
 
 await reportInstall();
 

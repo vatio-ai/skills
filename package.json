@@ -1,7 +1,7 @@
 {
   "name": "@vatio-ai/skills",
-  "version": "2.2.1",
-  "description": "Vatio skills and MCP for Claude Code, Cursor and Codex: build and test an AI agent for the app you're building with /vatio-init, improve it daily with /vatio-improve and learn what people ask it with /vatio-analyze. Vatio holds the agent; no config files in your repo.",
+  "version": "3.0.0",
+  "description": "The Vatio skill and MCP for Claude Code, Cursor and Codex: build, change, improve and analyze an always-on agent on Vatio with /vatio. Vatio holds and runs the agent; no config files in your repo.",
   "keywords": [
     "vatio",
     "ai-agent",
@@ -19,7 +19,7 @@
     "agent-skills",
     "skills"
   ],
-  "homepage": "https://vatio.ai/docs/integrations/claude-code",
+  "homepage": "https://vatio.ai/docs/mcp",
   "bugs": "https://github.com/vatio-ai/skills/issues",
   "license": "MIT",
   "author": "Vatio",

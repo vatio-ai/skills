@@ -5,15 +5,15 @@
     "url": "https://vatio.ai"
   },
   "metadata": {
-    "description": "The Vatio plugin: add an AI agent to the app you're building and improve it from real conversations."
+    "description": "The Vatio plugin: build and run always-on agents on Vatio through its MCP."
   },
   "plugins": [
     {
       "name": "vatio",
       "source": "./",
-      "description": "Vatio skills and MCP for Claude Code, Cursor and Codex: build and test an AI agent for the app you're building with /vatio-init, improve it daily with /vatio-improve and learn what people ask it with /vatio-analyze. Vatio holds the agent; no config files in your repo.",
-      "version": "2.2.1",
-      "homepage": "https://vatio.ai/docs/integrations/claude-code",
+      "description": "The Vatio skill and MCP for Claude Code, Cursor and Codex: build, change, improve and analyze an always-on agent on Vatio with /vatio. Vatio holds and runs the agent; no config files in your repo.",
+      "version": "3.0.0",
+      "homepage": "https://vatio.ai/docs/mcp",
       "category": "development",
       "keywords": [
         "vatio",
