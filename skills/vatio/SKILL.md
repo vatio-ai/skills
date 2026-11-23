@@ -86,8 +86,8 @@ business facts.
    business's name), then `update_agent` with `instructions` (the job, written
    plainly, with the never-say rules as explicit rules), a `name` and a
    `personality`.
-2. **What it knows.** `create_knowledge_base`, one `write_knowledge_entry` per
-   topic, and the base in the agent's `knowledge` (`update_agent`).
+2. **What it knows.** One `write_knowledge_entry` per topic: the first one
+   creates the base and gives it to the agent.
 3. **What it looks up and does.** `set_secret` for the backend's URL and
    credential, taking the values from the app's `.env` (never repeat one back
    or write it into a file); `set_backend` with `base_url` and `headers` that
@@ -121,8 +121,8 @@ business facts.
    notify_team; if not, send nothing"). Questions go through the built-in
    `ask_team`, and a yes through a tool's `approval`. The people who
    should get them must be on the team: `invite_member` as `supervisor` (or
-   the owner, from **Team** in the inbox). `get_notifications` shows who gets
-   what. Notices always land in For you; `set_notifications` turns WhatsApp on
+   the owner, from **Team** in the inbox). `get_settings` (notifications) shows
+   who gets what. Notices always land in For you; `set_notifications` turns WhatsApp on
    or off for someone, with their yes. WhatsApp needs a verified number and, on
    live, the workspace's own number connected in the inbox.
 
@@ -142,8 +142,8 @@ the id in `chat_with_agent`'s `files`.
 
 For each thing that matters, `add_test` with `question` (what someone would
 send) and `should` (what the answer has to do), or with the `chat_id` or
-`message_id` of a reply you already have. `get_test` with each `chat_id` says
-whether it passes. Three or four to start, including the hand-off and
+`message_id` of a reply you already have. `get_test_results` with each `chat_id` as `id`
+says whether it passes. Three or four to start, including the hand-off and
 something it must not say. Vatio replays the tests that pass today on every
 change, and a change that breaks one reaches the team but not everyone else.
 With no tests, every change reaches everyone at once, unchecked. `run_tests`,
@@ -200,7 +200,7 @@ what you see:
 - **Nothing wakes it but messages:** offer a schedule or events, if its job
   would gain from them.
 - **It tells nobody anything:** offer `notify_team` for handoffs, summaries or
-  alerts, and check with `get_notifications` that the right people get them.
+  alerts, and check with `get_settings` (notifications) that the right people get them.
 
 A tool that refuses says what to do next: follow it. A change to an agent
 people already talk to, `remove_test`, `erase_contact` and turning WhatsApp
